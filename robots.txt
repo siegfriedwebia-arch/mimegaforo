@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mimegaforo.com/sitemap.xml

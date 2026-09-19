@@ -1,0 +1,3355 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MiMegaForo — Foro de debate gratuito</title>
+<meta name="description" content="MiMegaForo es un foro gratuito en español para debatir y compartir sobre política, deportes, música, cine, videojuegos, fotografía, cocina y mucho más.">
+<meta name="author" content="Siegfried">
+<meta property="og:title" content="MiMegaForo">
+<meta property="og:description" content="Un foro gratuito en español para hablar, debatir y compartir sobre muchos temas.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_ES">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "name": "MiMegaForo",
+      "url": "https://mimegaforo.com/",
+      "description": "MiMegaForo es un foro gratuito en español para debatir y compartir sobre política, deportes, música, cine, videojuegos, fotografía, cocina y mucho más.",
+      "inLanguage": "es",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://mimegaforo.com/?buscar={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "Organization",
+      "name": "MiMegaForo",
+      "url": "https://mimegaforo.com/",
+      "logo": "https://mimegaforo.com/img/logo-header.png"
+    }
+  ]
+}
+</script>
+<meta name="robots" content="index,follow">
+<meta name="theme-color" content="#131019">
+<link rel="canonical" href="https://mimegaforo.com/">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:image" content="https://mimegaforo.com/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#131019;
+  --bg-alt:#0f0d14;
+  --surface:#1c1826;
+  --surface-2:#241f30;
+  --border:#332c40;
+  --border-strong:#453c55;
+  --text:#f3f0f9;
+  --text-muted:#a79fb8;
+  --text-faint:#736a86;
+  --amber:#ffb703;
+  --amber-strong:#ffcc4d;
+  --violet:#8b5cf6;
+  --danger:#ff5c7a;
+  --success:#34d399;
+  --radius-s:8px;
+  --radius-m:14px;
+  --radius-l:22px;
+  --font-display:'Space Grotesk',system-ui,sans-serif;
+  --font-body:'Inter',system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box}
+body{font-family:var(--font-body);margin:0;padding:0;background:
+  radial-gradient(ellipse 900px 500px at 15% -10%,rgba(139,92,246,.16),transparent),
+  radial-gradient(ellipse 700px 500px at 100% 0%,rgba(255,183,3,.10),transparent),
+  var(--bg);
+  color:var(--text);line-height:1.5}
+h1,h2,h3{font-family:var(--font-display);letter-spacing:-.01em}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--amber-strong);outline-offset:2px}
+
+header{
+  background:var(--bg-alt);
+  border-bottom:1px solid var(--border);
+  color:#fff;padding:.9rem 1.5rem;
+  display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;
+  position:sticky;top:0;z-index:50;
+}
+header h1{margin:0;font-size:1.3rem;font-weight:700;white-space:nowrap}
+#form-buscar{display:flex;gap:.4rem;flex:1;max-width:380px;min-width:180px}
+#form-buscar input{margin:0}
+#form-buscar button{width:auto;margin:0;white-space:nowrap}
+#usuario-header{
+  font-family:var(--font-body);font-size:.85rem;font-weight:600;
+  background:var(--surface);border:1px solid var(--border);
+  padding:.4rem .8rem;border-radius:999px;white-space:nowrap;
+}
+.autor-link{cursor:pointer}
+#notif-badge{background:var(--danger);color:#fff;border-radius:999px;font-size:.65rem;padding:1px 5px;margin-left:2px;font-weight:700}
+#notif-badge:empty{display:none}
+.notif-nueva{border-left:3px solid var(--amber) !important}
+
+#pie-pagina{
+  max-width:1400px;margin:2rem auto 0;padding:1.2rem 1.5rem 2rem;
+  display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;align-items:center;
+  border-top:1px solid var(--border);color:var(--text-faint);font-size:.85rem;
+}
+#pie-pagina a{color:var(--text-muted);text-decoration:none}
+#pie-pagina a:hover{color:var(--text);text-decoration:underline}
+#pie-pagina .footer-links{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem}
+#pie-pagina p{margin:0 0 0 auto}
+
+.banner-cookies{
+  display:none;
+  position:fixed;left:0;right:0;bottom:0;z-index:1000;
+  background:var(--bg-alt);border-top:1px solid var(--border-strong);
+  padding:1rem 1.5rem;
+  flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between;
+  box-shadow:0 -4px 20px rgba(0,0,0,.35);
+}
+.banner-cookies.activo{display:flex}
+.banner-cookies p{margin:0;color:var(--text-muted);font-size:.85rem;max-width:640px}
+.banner-cookies p a{color:var(--amber-strong)}
+.banner-cookies-botones{display:flex;gap:.6rem;flex-shrink:0}
+.banner-cookies-botones button{width:auto;margin:0}
+.btn-reportar{color:var(--text-faint)}
+.btn-reportar:hover{color:var(--danger);border-color:rgba(255,92,122,.4)}
+#boton-cargar-mas{margin-top:.5rem}
+.autor-link:hover{text-decoration:underline;color:var(--text)}
+.barra-hilos{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem}
+.barra-hilos select{width:auto;background:var(--bg-alt);color:var(--text);border:1px solid var(--border);padding:.4rem .6rem;border-radius:var(--radius-s);font-family:var(--font-body);font-size:.85rem}
+
+.container{display:grid;grid-template-columns:220px 1fr 280px;max-width:1400px;margin:2rem auto;gap:1.5rem;padding:0 1.5rem}
+aside,main,.panel-usuario{background:var(--surface);padding:1.1rem;border-radius:var(--radius-m);border:1px solid var(--border)}
+aside{height:fit-content;position:sticky;top:5.5rem}
+aside h3{margin:.2rem 0 .8rem;font-size:.95rem;color:var(--text-muted);font-weight:600}
+.panel-usuario{height:fit-content;position:sticky;top:5.5rem}
+.panel-usuario h3{margin:.2rem 0 .9rem}
+
+ul{list-style:none;padding:0;margin:0}
+li{border-left:3px solid transparent;border-radius:0 var(--radius-s) var(--radius-s) 0}
+li a{display:block;padding:.55rem .7rem;color:var(--text-muted);text-decoration:none;font-weight:500;border-radius:0 var(--radius-s) var(--radius-s) 0;transition:background .12s,color .12s}
+li a:hover{background:var(--surface-2);color:var(--text)}
+aside li:nth-child(1){border-color:var(--text-faint)}
+aside li:nth-child(2){border-color:#ffb703}
+aside li:nth-child(3){border-color:#64748b}
+aside li:nth-child(4){border-color:#22c55e}
+aside li:nth-child(5){border-color:#f472b6}
+aside li:nth-child(6){border-color:#eab308}
+aside li:nth-child(7){border-color:#8b5cf6}
+aside li:nth-child(8){border-color:#14b8a6}
+aside li:nth-child(9){border-color:#22d3ee}
+aside li:nth-child(10){border-color:#3b82f6}
+aside li:nth-child(11){border-color:#f97316}
+aside li:nth-child(12){border-color:#84cc16}
+aside li:nth-child(13){border-color:#ec4899}
+aside li:nth-child(14){border-color:#facc15}
+.enlace-normas{border-color:var(--text-faint) !important}
+
+.form-group{margin-bottom:.9rem}
+label{display:block;font-size:.85rem;font-weight:600;color:var(--text-muted);margin-bottom:.3rem}
+input,textarea{width:100%;padding:.65rem .75rem;background:var(--bg-alt);color:var(--text);border:1px solid var(--border);border-radius:var(--radius-s);font-family:var(--font-body);font-size:.95rem}
+input::placeholder,textarea::placeholder{color:var(--text-faint)}
+input:focus,textarea:focus{outline:none;border-color:var(--amber);box-shadow:0 0 0 3px rgba(255,183,3,.18)}
+textarea{resize:vertical}
+button{background:var(--amber);color:#1a1300;border:0;padding:.65rem 1rem;cursor:pointer;width:100%;border-radius:var(--radius-s);font-weight:700;font-family:var(--font-display);margin-top:.5rem;transition:transform .1s,background .12s}
+button:hover{background:var(--amber-strong)}
+button:active{transform:scale(.98)}
+.tabs{display:flex;gap:5px}
+.tabs button{width:50%;background:var(--surface-2);color:var(--text-muted)}
+.tabs .activo{background:var(--amber);color:#1a1300}
+.boton-danger{background:var(--danger);color:#2a0009}
+.boton-danger:hover{background:#ff7d94}
+.boton-secundario{background:var(--surface-2);color:var(--text)}
+.boton-secundario:hover{background:var(--border-strong)}
+
+.hilo-card{border:1px solid var(--border);border-left:3px solid var(--sec-color,var(--amber));padding:1.1rem;border-radius:var(--radius-m);background:var(--surface-2);margin-bottom:1rem;transition:border-color .12s,transform .12s}
+.hilo-card.hilo-link:hover{border-color:var(--border-strong);transform:translateY(-1px);cursor:pointer}
+.hilo-fijado{
+border-left-color:var(--amber)!important;
+box-shadow:0 0 0 1px rgba(255,183,3,.10);
+}
+.insignia-fijado,.insignia-cerrado{
+display:inline-flex;
+align-items:center;
+gap:4px;
+margin-right:7px;
+padding:3px 8px;
+border-radius:999px;
+font-size:.72rem;
+font-weight:700;
+vertical-align:middle;
+}
+.insignia-fijado{
+background:rgba(255,183,3,.14);
+border:1px solid rgba(255,183,3,.28);
+color:var(--amber-strong);
+}
+.insignia-cerrado{
+background:rgba(167,159,184,.12);
+border:1px solid var(--border);
+color:var(--text-muted);
+}
+.hilo-cerrado{opacity:.9}
+.portada-bloque{
+background:var(--bg-alt);
+border:1px solid var(--border);
+border-radius:var(--radius-m);
+padding:1rem;
+margin-bottom:1rem;
+}
+.portada-estadisticas{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+margin-bottom:1rem;
+}
+.portada-estadistica{
+background:var(--surface-2);
+border:1px solid var(--border);
+border-radius:var(--radius-m);
+padding:1rem;
+text-align:center;
+}
+.portada-estadistica strong{
+display:block;
+font-family:var(--font-display);
+font-size:1.5rem;
+color:var(--amber-strong);
+}
+.metrica-hilo{
+display:flex;
+flex-wrap:wrap;
+gap:.45rem .85rem;
+margin-top:.55rem;
+color:var(--text-faint);
+font-size:.78rem;
+}
+.favorito-btn{
+width:auto;
+margin:0;
+padding:6px 10px;
+border:1px solid var(--border);
+background:var(--bg-alt);
+color:var(--text-muted);
+border-radius:999px;
+font-family:var(--font-body);
+font-size:.8rem;
+font-weight:600;
+}
+.favorito-btn:hover{background:var(--surface);color:var(--amber-strong);border-color:var(--border-strong)}
+.favorito-btn.activo{background:rgba(255,183,3,.14);border-color:rgba(255,183,3,.35);color:var(--amber-strong)}
+.tendencia-card{
+position:relative;
+}
+.tendencia-numero{
+position:absolute;
+right:12px;
+top:12px;
+width:30px;
+height:30px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+background:var(--bg-alt);
+border:1px solid var(--border);
+color:var(--amber-strong);
+font-family:var(--font-display);
+font-weight:700;
+}
+.favoritos-vacio{
+background:var(--bg-alt);
+border:1px dashed var(--border-strong);
+border-radius:var(--radius-m);
+padding:1rem;
+color:var(--text-muted);
+}
+
+.estado-usuario{
+display:inline-flex;
+padding:3px 8px;
+border-radius:999px;
+font-size:.72rem;
+font-weight:700;
+margin-left:5px;
+background:rgba(52,211,153,.12);
+color:#8fead0;
+}
+.estado-usuario.suspendido{background:rgba(255,183,3,.14);color:var(--amber-strong)}
+.estado-usuario.bloqueado{background:rgba(255,92,122,.14);color:#ffb3c1}
+.usuario-admin-card{
+display:flex;
+justify-content:space-between;
+gap:1rem;
+align-items:center;
+flex-wrap:wrap;
+}
+.usuario-admin-acciones{display:flex;gap:.5rem;flex-wrap:wrap}
+.usuario-admin-acciones button{width:auto;margin-top:0}
+@media(max-width:700px){
+.portada-estadisticas{grid-template-columns:1fr}
+.usuario-admin-card{align-items:flex-start}
+}
+.hilo-card h3{margin:0 0 .4rem;color:var(--text);font-size:1.05rem}
+.hilo-card p{margin:0 0 .6rem;line-height:1.55;color:var(--text-muted)}
+.hilo-meta{color:var(--text-faint);font-size:.8rem}
+.crear-hilo{margin-bottom:1.6rem;background:var(--bg-alt);padding:1.1rem;border-radius:var(--radius-m);border:1px solid var(--border)}
+.mensaje{padding:.7rem .9rem;border-radius:var(--radius-s);margin-bottom:1rem;display:none;font-size:.9rem}
+.mensaje.error{display:block;background:rgba(255,92,122,.14);color:#ffb3c1;border:1px solid rgba(255,92,122,.3)}
+.mensaje.exito{display:block;background:rgba(52,211,153,.14);color:#8fead0;border:1px solid rgba(52,211,153,.3)}
+.error-texto{color:var(--danger);font-size:.8rem;margin-top:.2rem}
+.ayuda-texto{color:var(--text-faint);font-size:.8rem;margin-top:.2rem}
+.hilo-link{cursor:pointer}
+.hilo-vista{margin-bottom:1rem}
+.gestion-respuesta{display:flex;gap:.5rem;margin-top:.7rem}
+.gestion-respuesta button{width:auto;margin-top:0}
+.btn-editar-respuesta{background:var(--surface);color:var(--text-muted)}
+.btn-borrar-respuesta{background:var(--danger);color:#2a0009}
+.respuesta-card{border:1px solid var(--border);border-left:2px solid var(--border-strong);padding:1rem 1.1rem;border-radius:var(--radius-s);background:var(--bg-alt);margin-bottom:.9rem;margin-left:1rem}
+.respuesta-meta{color:var(--text-faint);font-size:.8rem;margin-bottom:.5rem}
+.boton-volver{background:var(--surface-2);color:var(--text);width:auto;padding:.5rem 1rem;font-family:var(--font-body);font-weight:600}
+.respuestas{margin-top:1.5rem}
+.respuestas h3{margin-bottom:.8rem}
+
+.votos{display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap}
+.voto-btn{width:auto;margin-top:0;background:var(--bg-alt);color:var(--text-muted);border:1px solid var(--border);padding:6px 12px;border-radius:999px;font-family:var(--font-body);font-weight:600;font-size:.85rem}
+.voto-btn:hover{border-color:var(--border-strong);color:var(--text)}
+.voto-btn.activo{background:rgba(139,92,246,.18);border-color:var(--violet);color:#c9b8ff}
+.votos-separador{color:var(--text-faint)}
+
+.bienvenida{padding:2.5rem 1rem;max-width:640px}
+.bienvenida h2{font-size:2rem;margin:0 0 .6rem}
+.bienvenida p{color:var(--text-muted);margin:0 0 .4rem;font-size:1.02rem}
+
+@media(max-width:1000px){
+.container{grid-template-columns:200px 1fr}
+.panel-usuario{grid-column:1/-1;position:static}
+}
+@media(max-width:700px){
+.container{display:block}
+aside,main,.panel-usuario{margin-bottom:1rem;position:static}
+.respuesta-card{margin-left:0}
+}
+@media(prefers-reduced-motion:reduce){
+*{transition:none!important}
+}
+
+/* Perfiles y gestión de hilos */
+.perfil-usuario{
+  max-width:760px;
+  margin:25px auto;
+  padding:26px;
+  border-radius:var(--radius-l);
+  background:var(--surface);
+  border:1px solid var(--border);
+}
+.perfil-cabecera{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  margin-bottom:22px;
+}
+.avatar-usuario{
+  width:64px;
+  height:64px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,var(--amber),var(--violet));
+  color:#1a1300;
+  font-family:var(--font-display);
+  font-size:28px;
+  font-weight:700;
+}
+.perfil-estadisticas{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+.perfil-estadistica{
+  text-align:center;
+  padding:16px 8px;
+  border-radius:var(--radius-m);
+  background:var(--bg-alt);
+  border:1px solid var(--border);
+}
+.perfil-estadistica strong{
+  display:block;
+  font-family:var(--font-display);
+  font-size:24px;
+  color:var(--amber-strong);
+}
+
+
+.portada-intro{padding:1.3rem 0 .5rem}
+.portada-intro h2{font-size:2rem;margin:0 0 .6rem}
+.portada-intro p{color:var(--text-muted);max-width:850px;margin:.35rem 0;font-size:1rem}
+.portada-seccion{margin-top:1.4rem}
+.portada-seccion h2{margin:.2rem 0 .65rem;font-size:1.25rem}
+.portada-seccion>p{color:var(--text-muted);margin:.2rem 0 .9rem}
+.categorias-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.categoria-portada{display:block;text-decoration:none;background:var(--bg-alt);border:1px solid var(--border);border-left:4px solid var(--sec-color,#8b5cf6);border-radius:var(--radius-m);padding:12px 14px;transition:transform .12s,border-color .12s,background .12s}
+.categoria-portada:hover{transform:translateY(-1px);background:var(--surface-2);border-color:var(--border-strong)}
+.categoria-portada strong{display:block;font-family:var(--font-display);margin-bottom:3px}
+.categoria-portada span{display:block;color:var(--text-muted);font-size:.86rem}
+.portada-pasos{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.paso-portada{background:var(--bg-alt);border:1px solid var(--border);border-radius:var(--radius-m);padding:14px}
+.paso-portada strong{display:block;margin-bottom:5px}
+.paso-portada p{color:var(--text-muted);margin:0;font-size:.88rem}
+.portada-cta{display:flex;flex-wrap:wrap;gap:8px;margin-top:.8rem}
+.portada-cta a{display:inline-block;text-decoration:none;padding:.6rem .85rem;border-radius:var(--radius-s);background:var(--amber);color:#1a1300;font-weight:700}
+.portada-cta a.secundario{background:var(--surface-2);color:var(--text);border:1px solid var(--border)}
+.hilo-titulo-link{color:inherit;text-decoration:none}
+.hilo-titulo-link:hover{text-decoration:underline}
+.bloque-info{background:var(--bg-alt);border:1px solid var(--border);border-radius:var(--radius-m);padding:14px;color:var(--text-muted)}
+.bloque-info strong{color:var(--text)}
+.migas{color:var(--text-muted);font-size:.86rem;margin-bottom:.7rem}
+.migas a{color:var(--text);text-decoration:none}
+.migas a:hover{text-decoration:underline}
+@media(max-width:700px){
+  .categorias-grid{grid-template-columns:1fr}
+  .portada-pasos{grid-template-columns:1fr}
+}
+
+.logros-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  margin-top:12px;
+}
+.logro-card{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  padding:13px;
+  border-radius:var(--radius-m);
+  border:1px solid var(--border);
+  background:var(--bg-alt);
+}
+.logro-card.conseguido{
+  border-color:rgba(255,183,3,.5);
+  background:rgba(255,183,3,.08);
+}
+.logro-icono{
+  font-size:1.6rem;
+  line-height:1;
+}
+.logro-card strong{
+  display:block;
+  margin-bottom:3px;
+}
+.logro-card small{
+  color:var(--text-muted);
+}
+.logros-resumen{
+  color:var(--text-muted);
+  font-size:.9rem;
+  margin:4px 0 0;
+}
+
+.gestion-hilo{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+  flex-wrap:wrap;
+}
+.btn-editar-hilo,.btn-borrar-hilo{
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:8px 14px;
+  cursor:pointer;
+  font-weight:600;
+  font-family:var(--font-body);
+  font-size:.85rem;
+}
+.btn-editar-hilo{background:var(--bg-alt);color:var(--text-muted);}
+.btn-borrar-hilo{background:rgba(255,92,122,.14);color:#ffb3c1;border-color:rgba(255,92,122,.3);}
+.modal-editar{
+  position:fixed;
+  inset:0;
+  background:rgba(6,4,10,.7);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:9999;
+}
+.modal-editar.activo{display:flex;}
+.modal-editar-contenido{
+  width:min(600px,100%);
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-l);
+  padding:24px;
+}
+.modal-editar h2{margin-top:0}
+.modal-editar-contenido h3{margin:20px 0 8px;font-size:.95rem;color:var(--text-muted);padding-top:14px;border-top:1px solid var(--border)}
+.modal-editar-contenido h3:first-of-type{padding-top:0;border-top:0;margin-top:14px}
+.config-zona-peligrosa{color:var(--danger)!important}
+.modal-editar textarea{
+  width:100%;
+  min-height:140px;
+  box-sizing:border-box;
+  padding:12px;
+  margin:10px 0;
+  border-radius:var(--radius-s);
+  border:1px solid var(--border);
+  background:var(--bg-alt);
+  color:var(--text);
+  resize:vertical;
+}
+.acciones-modal{display:flex;gap:10px;justify-content:flex-end;}
+.acciones-modal button{width:auto}
+@media(max-width:600px){
+  .perfil-estadisticas{grid-template-columns:repeat(2,1fr);}
+  .logros-grid{grid-template-columns:1fr;}
+}
+
+</style>
+</head>
+<body>
+
+<header>
+<h1><img src="img/logo-header.png" alt="MiMegaForo" width="32" height="32" style="height:32px;width:32px;vertical-align:middle;margin-right:8px;border-radius:50%">MiMegaForo</h1>
+<form id="form-buscar" onsubmit="buscarHilos(event)">
+<input type="text" id="buscar-input" placeholder="Buscar en el foro...">
+<button type="submit">Buscar</button>
+</form>
+<div id="usuario-header">👤 Invitado</div>
+<button id="btn-notificaciones" onclick="abrirNotificaciones()" style="display:none;width:auto;margin:0;position:relative;background:var(--surface);color:var(--text);border:1px solid var(--border)">
+🔔<span id="notif-badge"></span>
+</button>
+</header>
+
+<div class="container">
+
+<aside>
+<h3>📚 Secciones</h3>
+<ul>
+<li><a href="./" onclick="mostrarInicio();return false;">🏠 Inicio</a></li>
+<li><a href="#" onclick="cargarSeccion('General');return false;">💬 General</a></li>
+<li><a href="#" onclick="cargarSeccion('Política');return false;">⚖️ Política</a></li>
+<li><a href="#" onclick="cargarSeccion('Deportes');return false;">⚽ Deportes</a></li>
+<li><a href="#" onclick="cargarSeccion('Famosos');return false;">⭐ Famosos</a></li>
+<li><a href="#" onclick="cargarSeccion('Economía');return false;">📈 Economía</a></li>
+<li><a href="#" onclick="cargarSeccion('Música');return false;">🎵 Música</a></li>
+<li><a href="#" onclick="cargarSeccion('Cine');return false;">🎬 Cine</a></li>
+<li><a href="#" onclick="cargarSeccion('Videojuegos');return false;">🎮 Videojuegos</a></li>
+<li><a href="#" onclick="cargarSeccion('Informática');return false;">💻 Informática</a></li>
+<li><a href="#" onclick="cargarSeccion('Cocina');return false;">🍳 Cocina</a></li>
+<li><a href="#" onclick="cargarSeccion('Fitness');return false;">💪 Fitness</a></li>
+<li><a href="#" onclick="cargarSeccion('Fotografía');return false;">📷 Fotografía</a></li>
+<li><a href="#" onclick="cargarSeccion('Memes');return false;">😂 Memes</a></li>
+</ul>
+<ul style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+<li><a href="#" onclick="mostrarFavoritos();return false;">⭐ Mis favoritos</a></li>
+<li class="enlace-normas"><a href="#" onclick="abrirNormas();return false;">📜 Normas del foro</a></li>
+</ul>
+</aside>
+
+<main id="foro-content">
+<div class="portada-intro">
+<h2>🔥 Bienvenido a MiMegaForo</h2>
+<p>MiMegaForo es un foro gratuito en español para conversar, debatir y compartir ideas sobre temas de actualidad, ocio, tecnología y vida cotidiana.</p>
+<p>Aquí encontrarás conversaciones abiertas sobre política, deportes, economía, música, cine, videojuegos, informática, cocina, fitness, fotografía, memes y más.</p>
+<div class="portada-cta">
+<a href="?seccion=General" onclick="cargarSeccion('General');return false;">💬 Entrar al foro</a>
+</div>
+</div>
+
+<section class="portada-seccion" aria-labelledby="que-es-mimegaforo">
+<h2 id="que-es-mimegaforo">¿Qué es MiMegaForo?</h2>
+<p>Un espacio para leer conversaciones, participar en debates y descubrir opiniones de otros usuarios. Las publicaciones se organizan por categorías para que sea fácil encontrar temas relacionados con tus intereses.</p>
+</section>
+
+<section class="portada-seccion" aria-labelledby="categorias-mimegaforo">
+<h2 id="categorias-mimegaforo">📚 Categorías del foro</h2>
+<p>Explora las secciones de MiMegaForo y entra directamente en la conversación que te interese.</p>
+<div class="categorias-grid">
+<a class="categoria-portada" style="--sec-color:#ffb703" href="?seccion=General" onclick="cargarSeccion('General');return false;"><strong>💬 General</strong><span>Conversaciones abiertas sobre temas variados.</span></a>
+<a class="categoria-portada" style="--sec-color:#64748b" href="?seccion=Pol%C3%ADtica" onclick="cargarSeccion('Política');return false;"><strong>⚖️ Política</strong><span>Debates y opiniones sobre actualidad política.</span></a>
+<a class="categoria-portada" style="--sec-color:#22c55e" href="?seccion=Deportes" onclick="cargarSeccion('Deportes');return false;"><strong>⚽ Deportes</strong><span>Resultados, competiciones, equipos y debates deportivos.</span></a>
+<a class="categoria-portada" style="--sec-color:#f472b6" href="?seccion=Famosos" onclick="cargarSeccion('Famosos');return false;"><strong>⭐ Famosos</strong><span>Noticias y conversaciones sobre personas conocidas.</span></a>
+<a class="categoria-portada" style="--sec-color:#eab308" href="?seccion=Econom%C3%ADa" onclick="cargarSeccion('Economía');return false;"><strong>📈 Economía</strong><span>Actualidad económica, empleo, consumo y finanzas.</span></a>
+<a class="categoria-portada" style="--sec-color:#8b5cf6" href="?seccion=M%C3%BAsica" onclick="cargarSeccion('Música');return false;"><strong>🎵 Música</strong><span>Artistas, canciones, conciertos y recomendaciones.</span></a>
+<a class="categoria-portada" style="--sec-color:#14b8a6" href="?seccion=Cine" onclick="cargarSeccion('Cine');return false;"><strong>🎬 Cine</strong><span>Películas, estrenos, series y conversaciones de cine.</span></a>
+<a class="categoria-portada" style="--sec-color:#22d3ee" href="?seccion=Videojuegos" onclick="cargarSeccion('Videojuegos');return false;"><strong>🎮 Videojuegos</strong><span>Juegos, plataformas, lanzamientos y comunidad.</span></a>
+<a class="categoria-portada" style="--sec-color:#3b82f6" href="?seccion=Inform%C3%A1tica" onclick="cargarSeccion('Informática');return false;"><strong>💻 Informática</strong><span>Ordenadores, software, internet y tecnología.</span></a>
+<a class="categoria-portada" style="--sec-color:#f97316" href="?seccion=Cocina" onclick="cargarSeccion('Cocina');return false;"><strong>🍳 Cocina</strong><span>Recetas, ideas para cocinar y trucos de cocina.</span></a>
+<a class="categoria-portada" style="--sec-color:#84cc16" href="?seccion=Fitness" onclick="cargarSeccion('Fitness');return false;"><strong>💪 Fitness</strong><span>Entrenamiento, hábitos saludables y actividad física.</span></a>
+<a class="categoria-portada" style="--sec-color:#ec4899" href="?seccion=Fotograf%C3%ADa" onclick="cargarSeccion('Fotografía');return false;"><strong>📷 Fotografía</strong><span>Cámaras, técnicas, fotografía digital y experiencias.</span></a>
+<a class="categoria-portada" style="--sec-color:#facc15" href="?seccion=Memes" onclick="cargarSeccion('Memes');return false;"><strong>😂 Memes</strong><span>Humor, memes y contenido divertido.</span></a>
+</div>
+</section>
+
+<section class="portada-seccion" aria-labelledby="como-funciona">
+<h2 id="como-funciona">🧭 ¿Cómo funciona el foro?</h2>
+<div class="portada-pasos">
+<div class="paso-portada"><strong>1. Explora</strong><p>Elige una categoría y lee los hilos que más te interesen.</p></div>
+<div class="paso-portada"><strong>2. Participa</strong><p>Crea una cuenta, verifica tu correo y participa en las conversaciones.</p></div>
+<div class="paso-portada"><strong>3. Contribuye</strong><p>Comparte opiniones útiles, respeta a los demás y ayuda a mantener una comunidad de calidad.</p></div>
+</div>
+</section>
+
+<section class="portada-seccion" aria-labelledby="convivencia">
+<h2 id="convivencia">🛡️ Una comunidad moderada</h2>
+<div class="bloque-info">MiMegaForo cuenta con normas de convivencia, herramientas para reportar contenido y moderación para mantener las conversaciones dentro de las reglas del foro.</div>
+</section>
+
+<section class="portada-seccion"><div class="portada-bloque"><h3>📌 Hilos destacados</h3><div id="portada-destacados"><p class="ayuda-texto">Cargando hilos destacados...</p></div></div></section>
+<section class="portada-seccion"><div class="portada-bloque"><h3>🔥 Tendencias</h3><p class="ayuda-texto">Conversaciones que están generando actividad recientemente.</p><div id="portada-tendencias"><p class="ayuda-texto">Cargando tendencias...</p></div></div></section>
+<section class="portada-seccion"><div class="portada-bloque"><h3>🕒 Actividad reciente</h3><div id="portada-activos"><p class="ayuda-texto">Cargando actividad...</p></div></div></section>
+<section class="portada-seccion"><div class="portada-bloque"><h3>📊 Comunidad</h3><div id="portada-estadisticas"><p class="ayuda-texto">Cargando estadísticas...</p></div></div></section>
+<section class="portada-seccion" aria-labelledby="participacion-calidad">
+<h2 id="participacion-calidad">💡 Cómo participar y aportar valor</h2>
+<p>MiMegaForo está pensado para conversaciones en las que el contenido de cada publicación aporte algo útil a los demás participantes.</p>
+<div class="portada-pasos">
+<div class="paso-portada"><strong>Escribe títulos claros</strong><p>Un título concreto ayuda a que otras personas entiendan el tema y encuentren la conversación después.</p></div>
+<div class="paso-portada"><strong>Aporta contexto</strong><p>Explica tu pregunta, opinión o experiencia con suficiente detalle para facilitar respuestas de calidad.</p></div>
+<div class="paso-portada"><strong>Respeta el debate</strong><p>Las diferencias de opinión forman parte de un foro, pero siempre deben mantenerse dentro de las normas de convivencia.</p></div>
+</div>
+</section>
+
+<section class="portada-seccion" aria-labelledby="preguntas-frecuentes">
+<h2 id="preguntas-frecuentes">❓ Preguntas frecuentes</h2>
+<div class="portada-bloque">
+<h3>¿Puedo leer el foro sin registrarme?</h3>
+<p>Sí. Las categorías y las conversaciones publicadas pueden consultarse públicamente. Para crear hilos, responder, votar o utilizar funciones de cuenta necesitas iniciar sesión.</p>
+
+<h3>¿Por qué se verifica el correo electrónico?</h3>
+<p>La verificación ayuda a mantener las cuentas más seguras y reduce el uso abusivo del registro.</p>
+
+<h3>¿Qué ocurre si encuentro contenido que incumple las normas?</h3>
+<p>Puedes utilizar la opción 🚩 Reportar disponible junto al contenido. El equipo de moderación puede revisar, editar o retirar publicaciones y suspender cuentas cuando corresponda.</p>
+
+<h3>¿Puedo eliminar mi cuenta?</h3>
+<p>Sí. Desde Configuración puedes solicitar la eliminación de la cuenta y del contenido asociado siguiendo el proceso de confirmación.</p>
+</div>
+</section>
+
+<section class="portada-seccion" aria-labelledby="contenido-publico">
+<h2 id="contenido-publico">🔎 Contenido público y moderado</h2>
+<div class="bloque-info">
+Los hilos y respuestas publicados en MiMegaForo forman parte de una comunidad abierta. La participación requiere una cuenta verificada, mientras que la lectura de las conversaciones no requiere iniciar sesión. Todo el contenido debe respetar las normas del foro y las leyes aplicables.
+</div>
+</section>
+
+</main>
+
+<div class="panel-usuario" id="panel-identificacion">
+
+<h3>👤 Mi cuenta</h3>
+
+<div class="tabs">
+<button id="tab-login" class="activo" onclick="mostrarLogin()">Iniciar sesión</button>
+<button id="tab-registro" onclick="mostrarRegistro()">Registrarse</button>
+</div>
+
+<div id="mensaje-auth" class="mensaje"></div>
+
+<form id="form-login" onsubmit="iniciarSesion(event)">
+
+<div class="form-group">
+<label>Correo electrónico</label>
+<input type="email" id="login-email" placeholder="correo@ejemplo.com" required>
+</div>
+
+<div class="form-group">
+<label>Contraseña</label>
+<input type="password" id="login-pass" placeholder="Tu contraseña" required>
+</div>
+
+<button type="submit">🔐 Iniciar sesión</button>
+<button type="button" class="boton-secundario" onclick="reenviarVerificacion()">📧 Reenviar email de verificación</button>
+<button type="button" class="boton-secundario" onclick="recuperarContrasena()">🔑 He olvidado mi contraseña</button>
+
+</form>
+
+<form id="form-registro" onsubmit="registrarUsuario(event)" style="display:none">
+
+<div class="form-group">
+<label>Nombre de usuario</label>
+<input type="text" id="registro-username" placeholder="Ej: usuario123" minlength="3" maxlength="20" required>
+<div class="ayuda-texto">Solo letras minúsculas, números y _.</div>
+</div>
+
+<div class="form-group">
+<label>Correo electrónico</label>
+<input type="email" id="registro-email" placeholder="correo@ejemplo.com" required>
+</div>
+
+<div class="form-group">
+<label>Contraseña</label>
+<input type="password" id="registro-pass" placeholder="Mínimo 6 caracteres" minlength="6" required>
+</div>
+
+<div class="form-group">
+<label style="display:flex;align-items:flex-start;gap:8px;font-weight:400;cursor:pointer">
+<input type="checkbox" id="registro-acepta-normas" style="width:auto;margin-top:3px" required>
+<span>He leído y acepto las <a href="#" onclick="event.preventDefault();abrirNormas();" style="color:var(--amber-strong);text-decoration:underline">normas del foro</a>.</span>
+</label>
+</div>
+
+<button type="submit">📝 Crear cuenta</button>
+
+</form>
+
+</div>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-check-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script>
+
+const firebaseConfig={
+apiKey:"AIzaSyB9lWPJUU78wpVaQi4cXlRGbObpTIBOa98",
+authDomain:"mimegaforo.firebaseapp.com",
+projectId:"mimegaforo",
+storageBucket:"mimegaforo.firebasestorage.app",
+messagingSenderId:"411613217972",
+appId:"1:411613217972:web:d731c208a2db2830c103e1"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+// App Check: protege el registro de spam/bots con reCAPTCHA Enterprise.
+// Es invisible, no muestra ningún puzle ni checkbox al usuario.
+const appCheck=firebase.appCheck();
+appCheck.activate(
+  new firebase.appCheck.ReCaptchaEnterpriseProvider("6LcPr8ItAAAAANN2kyqw5wTKYUrpJeRIsRHsvAfU"),
+  true // refresca el token automáticamente
+);
+
+const auth=firebase.auth();
+const db=firebase.firestore();
+const panelIdentificacionInicial=document.getElementById("panel-identificacion").innerHTML;
+let unsubscribeNotificaciones=null;
+
+let usuarioLogueado=null;
+let esAdmin=false;
+let registrandoUsuario=false;
+let seccionActual=null;
+let favoritosHiloIds=new Set();
+
+function mostrarMensaje(texto,tipo){
+const mensaje=document.getElementById("mensaje-auth");
+mensaje.innerText=texto;
+mensaje.className="mensaje "+tipo;
+}
+
+async function comprobarCuentaActiva(uid){
+try{
+const doc=await db.collection("usuarios").doc(uid).get();
+if(!doc.exists) return {ok:true};
+const datos=doc.data();
+
+if(datos.bloqueado===true){
+return {ok:false,mensaje:"Tu cuenta está bloqueada por moderación."};
+}
+
+if(datos.suspendidoHasta && typeof datos.suspendidoHasta.toMillis==="function"){
+const hasta=datos.suspendidoHasta.toMillis();
+if(hasta>Date.now()){
+const fecha=new Date(hasta).toLocaleString("es-ES",{dateStyle:"medium",timeStyle:"short"});
+return {ok:false,mensaje:"Tu cuenta está suspendida hasta el "+fecha+"."};
+}
+}
+
+return {ok:true};
+}catch(error){
+console.error(error);
+return {ok:false,mensaje:"No se ha podido comprobar el estado de tu cuenta."};
+}
+}
+
+window.mostrarLogin=function(){
+document.getElementById("form-login").style.display="block";
+document.getElementById("form-registro").style.display="none";
+document.getElementById("tab-login").classList.add("activo");
+document.getElementById("tab-registro").classList.remove("activo");
+document.getElementById("mensaje-auth").className="mensaje";
+};
+
+window.mostrarRegistro=function(){
+document.getElementById("form-login").style.display="none";
+document.getElementById("form-registro").style.display="block";
+document.getElementById("tab-login").classList.remove("activo");
+document.getElementById("tab-registro").classList.add("activo");
+document.getElementById("mensaje-auth").className="mensaje";
+};
+
+window.registrarUsuario=async function(event){
+
+event.preventDefault();
+
+const username=document.getElementById("registro-username").value.trim().toLowerCase();
+const email=document.getElementById("registro-email").value.trim().toLowerCase();
+const password=document.getElementById("registro-pass").value;
+
+if(!/^[a-z0-9_]{3,20}$/.test(username)){
+mostrarMensaje("El nombre de usuario no es válido.","error");
+return;
+}
+
+if(!document.getElementById("registro-acepta-normas").checked){
+mostrarMensaje("Debes aceptar las normas del foro para registrarte.","error");
+return;
+}
+
+try{
+
+registrandoUsuario=true;
+
+mostrarMensaje("Creando cuenta...","exito");
+
+const usernameQuery=await db.collection("usuarios")
+.where("username","==",username)
+.limit(1)
+.get();
+
+if(!usernameQuery.empty){
+mostrarMensaje("Ese nombre de usuario ya está ocupado.","error");
+return;
+}
+
+const credencial=await auth.createUserWithEmailAndPassword(email,password);
+
+await credencial.user.getIdToken(true);
+
+const datosUsuario={
+username:username,
+email:email,
+uid:credencial.user.uid,
+aceptoNormas:true,
+fechaRegistro:firebase.firestore.FieldValue.serverTimestamp(),
+favoritosHiloIds:[]
+};
+
+let intentosRestantes=3;
+
+while(true){
+try{
+await db.collection("usuarios").doc(credencial.user.uid).set(datosUsuario);
+break;
+}catch(errorEscritura){
+intentosRestantes--;
+if(errorEscritura.code!=="permission-denied" || intentosRestantes<=0){
+throw errorEscritura;
+}
+await new Promise(r=>setTimeout(r,700));
+}
+}
+
+await credencial.user.sendEmailVerification();
+await auth.signOut();
+
+document.getElementById("form-registro").reset();
+mostrarMensaje("¡Cuenta creada! Te hemos enviado un email de verificación. Revisa tu correo y pulsa el enlace para verificar tu cuenta. Puede tardar unos minutos en llegar; si no lo ves, revisa también la carpeta de spam o promociones.","exito");
+
+}catch(error){
+
+console.error(error);
+
+let mensaje=error.code+" - "+error.message;
+
+if(error.code==="auth/email-already-in-use"){
+mensaje="Ese correo electrónico ya está registrado.";
+}
+
+if(error.code==="auth/invalid-email"){
+mensaje="El correo electrónico no es válido.";
+}
+
+if(error.code==="auth/weak-password"){
+mensaje="La contraseña debe tener al menos 6 caracteres.";
+}
+
+if(error.code==="auth/operation-not-allowed"){
+mensaje="El registro con correo y contraseña no está habilitado en Firebase Authentication.";
+}
+
+mostrarMensaje(mensaje,"error");
+
+}finally{
+
+registrandoUsuario=false;
+
+}
+
+};
+
+window.reenviarVerificacion=async function(){
+const email=document.getElementById("login-email").value.trim().toLowerCase();
+const password=document.getElementById("login-pass").value;
+
+if(!email||!password){
+mostrarMensaje("Escribe tu correo y contraseña para reenviar el email de verificación.","error");
+return;
+}
+
+try{
+const credencial=await auth.signInWithEmailAndPassword(email,password);
+await credencial.user.reload();
+
+if(credencial.user.emailVerified){
+await auth.signOut();
+mostrarMensaje("Este correo ya está verificado. Ya puedes iniciar sesión.","exito");
+return;
+}
+
+await credencial.user.sendEmailVerification();
+await auth.signOut();
+mostrarMensaje("Te hemos reenviado el email de verificación. Puede tardar unos minutos en llegar; revisa también la carpeta de spam o promociones.","exito");
+
+}catch(error){
+console.error(error);
+mostrarMensaje("No se ha podido reenviar el email de verificación. Comprueba el correo y la contraseña.","error");
+}
+};
+
+window.recuperarContrasena=async function(){
+
+const email=document.getElementById("login-email").value.trim().toLowerCase();
+
+if(!email){
+mostrarMensaje("Escribe tu correo electrónico en el campo de arriba y vuelve a pulsar el botón para recibir el enlace de recuperación.","error");
+return;
+}
+
+try{
+
+mostrarMensaje("Enviando enlace de recuperación...","exito");
+
+await auth.sendPasswordResetEmail(email);
+
+mostrarMensaje("Si ese correo está registrado, te hemos enviado un enlace para restablecer tu contraseña. Puede tardar unos minutos; revisa también la carpeta de spam o promociones.","exito");
+
+}catch(error){
+
+console.error(error);
+
+let mensaje="No se ha podido enviar el enlace de recuperación.";
+
+if(error.code==="auth/invalid-email"){
+mensaje="El correo electrónico no es válido.";
+}
+
+// No revelamos si el correo existe o no (por privacidad), salvo errores
+// de formato. Firebase ya no distingue "user-not-found" por defecto en
+// proyectos con protección de enumeración de email activada; si tu
+// proyecto la tiene desactivada, este mismo mensaje se sigue mostrando
+// para no filtrar qué correos están registrados.
+
+mostrarMensaje(mensaje,"error");
+
+}
+
+};
+
+window.iniciarSesion=async function(event){
+
+event.preventDefault();
+
+const email=document.getElementById("login-email").value.trim().toLowerCase();
+const password=document.getElementById("login-pass").value;
+
+try{
+
+mostrarMensaje("Iniciando sesión...","exito");
+
+const credencial=await auth.signInWithEmailAndPassword(email,password);
+await credencial.user.reload();
+
+if(!credencial.user.emailVerified){
+await auth.signOut();
+mostrarMensaje("Debes verificar tu correo electrónico antes de iniciar sesión. Revisa tu bandeja de entrada y la carpeta de spam o promociones; el email puede tardar unos minutos en llegar.","error");
+return;
+}
+
+}catch(error){
+
+console.error(error);
+
+let mensaje="Correo o contraseña incorrectos.";
+
+if(error.code==="auth/invalid-email"){
+mensaje="El correo electrónico no es válido.";
+}
+
+if(error.code==="auth/invalid-credential"||error.code==="auth/wrong-password"||error.code==="auth/user-not-found"){
+mensaje="Correo o contraseña incorrectos.";
+}
+
+mostrarMensaje(mensaje,"error");
+
+}
+
+};
+
+window.cerrarSesion=async function(){
+await auth.signOut();
+};
+
+/* =========================
+   CONSENTIMIENTO DE COOKIES
+   ========================= */
+
+window.addEventListener("DOMContentLoaded",function(){
+const elAnioActual=document.getElementById("anio-actual");
+if(elAnioActual) elAnioActual.innerText=new Date().getFullYear();
+});
+
+window.mostrarBannerCookies=function(){
+const el=document.getElementById("banner-cookies");
+if(el) el.classList.add("activo");
+};
+
+window.responderConsentimientoCookies=function(valor){
+try{
+localStorage.setItem("mimegaforo_cookies",valor);
+}catch(error){
+console.error(error);
+}
+const el=document.getElementById("banner-cookies");
+if(el) el.classList.remove("activo");
+};
+
+window.addEventListener("DOMContentLoaded",function(){
+let eleccionGuardada=null;
+try{
+eleccionGuardada=localStorage.getItem("mimegaforo_cookies");
+}catch(error){
+console.error(error);
+}
+if(!eleccionGuardada){
+mostrarBannerCookies();
+}
+});
+
+auth.onAuthStateChanged(async function(user){
+
+if(registrandoUsuario) return;
+
+try{
+
+if(user){
+
+await user.reload();
+
+if(!user.emailVerified){
+usuarioLogueado=null;
+await auth.signOut();
+mostrarMensaje("Debes verificar tu correo electrónico antes de acceder al foro. Revisa tu bandeja de entrada y la carpeta de spam o promociones; puede tardar unos minutos en llegar.","error");
+return;
+}
+
+usuarioLogueado=user;
+
+const usuarioDoc=await db.collection("usuarios").doc(user.uid).get();
+
+const estadoCuenta=await comprobarCuentaActiva(user.uid);
+if(!estadoCuenta.ok){
+usuarioLogueado=null;
+await auth.signOut();
+mostrarMensaje(estadoCuenta.mensaje,"error");
+return;
+}
+
+let username="Usuario";
+
+if(usuarioDoc.exists){
+const datosUsuario=usuarioDoc.data();
+username=datosUsuario.username;
+esAdmin=datosUsuario.esAdmin===true;
+favoritosHiloIds=new Set(Array.isArray(datosUsuario.favoritosHiloIds)?datosUsuario.favoritosHiloIds:[]);
+}else{
+favoritosHiloIds=new Set();
+}
+
+document.getElementById("usuario-header").innerText="👤 "+username+(esAdmin?" 🛡️":"");
+
+document.getElementById("panel-identificacion").innerHTML=`
+<h3 style="color:#28a745">✓ Sesión iniciada</h3>
+<p>Hola,<strong>${escapeHTML(username)}</strong></p>
+<p>Ya puedes crear hilos en MiMegaForo.</p>
+${esAdmin?'<button class="boton-secundario" onclick="abrirPanelModeracion()">🛡️ Panel de moderación</button>':''}
+<button class="boton-secundario" onclick="abrirConfiguracion()">⚙️ Configuración</button>
+<button class="boton-danger" onclick="cerrarSesion()">🚪 Cerrar sesión</button>
+`;
+
+document.getElementById("btn-notificaciones").style.display="inline-flex";
+
+if(unsubscribeNotificaciones) unsubscribeNotificaciones();
+
+unsubscribeNotificaciones=db.collection("notificaciones")
+.where("paraUid","==",user.uid)
+.where("leida","==",false)
+.onSnapshot(function(snapshot){
+document.getElementById("notif-badge").innerText = snapshot.size>0 ? snapshot.size : "";
+},function(error){
+console.error(error);
+});
+
+}else{
+
+usuarioLogueado=null;
+esAdmin=false;
+favoritosHiloIds=new Set();
+
+document.getElementById("btn-notificaciones").style.display="none";
+document.getElementById("notif-badge").innerText="";
+
+if(unsubscribeNotificaciones){
+unsubscribeNotificaciones();
+unsubscribeNotificaciones=null;
+}
+
+document.getElementById("usuario-header").innerText="👤 Invitado";
+
+document.getElementById("panel-identificacion").innerHTML=panelIdentificacionInicial;
+
+}
+
+}catch(error){
+
+console.error(error);
+
+mostrarMensaje("No se ha podido cargar tu sesión. Si tienes un bloqueador de anuncios activo, desactívalo para este sitio y recarga la página.","error");
+
+}
+
+});
+
+const coloresSeccion={
+"General":"#ffb703","Política":"#64748b","Deportes":"#22c55e","Famosos":"#f472b6",
+"Economía":"#eab308","Música":"#8b5cf6","Cine":"#14b8a6",
+"Videojuegos":"#22d3ee","Informática":"#3b82f6","Cocina":"#f97316","Fitness":"#84cc16",
+"Fotografía":"#ec4899","Memes":"#facc15"
+};
+
+const descripcionesSeccion={
+"General":"Conversaciones abiertas sobre temas variados y vida cotidiana.",
+"Política":"Debates y opiniones sobre actualidad política.",
+"Deportes":"Resultados, competiciones, equipos y debates deportivos.",
+"Famosos":"Noticias y conversaciones sobre personas conocidas.",
+"Economía":"Actualidad económica, empleo, consumo y finanzas.",
+"Música":"Artistas, canciones, conciertos y recomendaciones.",
+"Cine":"Películas, estrenos, series y conversaciones de cine.",
+"Videojuegos":"Juegos, plataformas, lanzamientos y comunidad.",
+"Informática":"Ordenadores, software, internet y tecnología.",
+"Cocina":"Recetas, ideas para cocinar y trucos de cocina.",
+"Fitness":"Entrenamiento, hábitos saludables y actividad física.",
+"Fotografía":"Cámaras, técnicas, fotografía digital y experiencias.",
+"Memes":"Humor, memes y contenido divertido."
+};
+
+function actualizarMetadatosPagina(titulo,descripcion){
+document.title=titulo;
+const meta=document.querySelector('meta[name="description"]');
+if(meta) meta.setAttribute("content",descripcion.slice(0,170));
+const ogTitle=document.querySelector('meta[property="og:title"]');
+if(ogTitle) ogTitle.setAttribute("content",titulo);
+const ogDesc=document.querySelector('meta[property="og:description"]');
+if(ogDesc) ogDesc.setAttribute("content",descripcion.slice(0,200));
+const canonical=document.querySelector('link[rel="canonical"]');
+if(canonical) canonical.setAttribute("href",window.location.href.split("#")[0]);
+}
+
+function limpiarDatosEstructurados(){
+const anterior=document.getElementById("datos-estructurados-foro");
+if(anterior) anterior.remove();
+}
+
+function ponerDatosEstructuradosHilo(hilo){
+limpiarDatosEstructurados();
+const datos={
+"@context":"https://schema.org",
+"@type":"DiscussionForumPosting",
+"headline":hilo.titulo||"Hilo de MiMegaForo",
+"text":hilo.contenido||"",
+"inLanguage":"es",
+"author":{"@type":"Person","name":hilo.autor||"Usuario"},
+"datePublished":hilo.fecha?.toDate?hilo.fecha.toDate().toISOString():new Date().toISOString(),
+"interactionStatistic":[
+{"@type":"InteractionCounter","interactionType":{"@type":"LikeAction"},"userInteractionCount":Array.isArray(hilo.meGustaUids)?hilo.meGustaUids.length:0},
+{"@type":"InteractionCounter","interactionType":{"@type":"CommentAction"},"userInteractionCount":Number(hilo.numRespuestas)||0}
+]
+};
+if(hilo.fechaEdicion?.toDate) datos.dateModified=hilo.fechaEdicion.toDate().toISOString();
+const script=document.createElement("script");
+script.id="datos-estructurados-foro";
+script.type="application/ld+json";
+script.textContent=JSON.stringify(datos).replace(/<\/script/gi,"<\\/script");
+document.head.appendChild(script);
+}
+
+function actualizarUrl(params){
+const url=new URL(window.location.href);
+url.search=params;
+history.replaceState(null,"",url.pathname+(url.search||"")+(url.hash||""));
+}
+
+let hilosSeccionActual=[];
+let hilosRenderizados=0;
+const HILOS_POR_PAGINA=10;
+
+async function crearTarjetaHilo(doc){
+
+const datos=doc.data();
+
+const tarjeta=document.createElement("div");
+
+tarjeta.className="hilo-card hilo-link"+(datos.fijado===true?" hilo-fijado":"")+(datos.cerrado===true?" hilo-cerrado":"");
+
+const respuestas = typeof datos.numRespuestas === "number" ? datos.numRespuestas : 0;
+
+const editado=datos.fechaEdicion ? ' · <em>editado</em>' : '';
+const insigniaFijado=datos.fijado===true?'<span class="insignia-fijado">📌 Fijado</span>':"";
+const insigniaCerrado=datos.cerrado===true?'<span class="insignia-cerrado">🔒 Cerrado</span>':"";
+
+tarjeta.innerHTML=`
+<h3>${insigniaFijado}${insigniaCerrado}<a class="hilo-titulo-link" href="?hilo=${encodeURIComponent(doc.id)}" onclick="event.preventDefault();abrirHilo('${escapeHTML(doc.id)}')">${escapeHTML(datos.titulo)}</a></h3>
+<p>${escapeHTML(datos.contenido)}</p>
+<div class="hilo-meta"><span class="autor-link" onclick="event.stopPropagation();mostrarPerfil('${datos.autorUid}')">👤 ${escapeHTML(datos.autor)}</span> · 💬 ${respuestas} ${respuestas===1?"respuesta":"respuestas"}${editado}</div>
+<div class="metrica-hilo">
+<span>👁️ ${Number(datos.visitas)||0}</span>
+<span>⭐ ${favoritosHiloIds.has(doc.id)?"En favoritos":"Disponible para favoritos"}</span>
+</div>
+
+<div class="votos" onclick="event.stopPropagation();">
+  <button class="voto-btn ${Array.isArray(datos.meGustaUids) && auth.currentUser && datos.meGustaUids.includes(auth.currentUser.uid) ? "activo" : ""}"
+    type="button" onclick="votarHilo('${doc.id}','meGusta')">👍 ${Array.isArray(datos.meGustaUids) ? datos.meGustaUids.length : 0}</button>
+  <button class="voto-btn ${Array.isArray(datos.noMeGustaUids) && auth.currentUser && datos.noMeGustaUids.includes(auth.currentUser.uid) ? "activo" : ""}"
+    type="button" onclick="votarHilo('${doc.id}','noMeGusta')">👎 ${Array.isArray(datos.noMeGustaUids) ? datos.noMeGustaUids.length : 0}</button>
+  ${auth.currentUser && datos.autorUid !== auth.currentUser.uid ? `
+  <button class="voto-btn btn-reportar" type="button" onclick="reportarContenido('hilo','${doc.id}',null)">🚩 Reportar</button>
+  ` : ""}
+</div>
+
+<div class="gestion-hilo" onclick="event.stopPropagation();">
+  <button class="favorito-btn ${favoritosHiloIds.has(doc.id)?"activo":""}" data-hilo-id="${doc.id}" type="button" onclick="alternarFavorito('${doc.id}')">${favoritosHiloIds.has(doc.id)?"⭐ Quitar de favoritos":"☆ Añadir a favoritos"}</button>
+</div>
+
+${auth.currentUser && (datos.autorUid === auth.currentUser.uid || esAdmin) ? `
+<div class="gestion-hilo" onclick="event.stopPropagation();">
+  ${datos.autorUid === auth.currentUser.uid ? `<button class="btn-editar-hilo" type="button"
+    onclick="editarHilo('${doc.id}')">✏️ Editar</button>` : ""}
+  ${esAdmin ? `<button class="btn-editar-hilo" type="button" onclick="alternarFijado('${doc.id}')">${datos.fijado===true?"📌 Desfijar":"📌 Fijar"}</button>` : ""}
+  ${esAdmin ? `<button class="btn-editar-hilo" type="button" onclick="alternarCerrado('${doc.id}')">${datos.cerrado===true?"🔓 Reabrir":"🔒 Cerrar"}</button>` : ""}
+  <button class="btn-borrar-hilo" type="button"
+    onclick="borrarHilo('${doc.id}')">🗑️ Borrar${datos.autorUid !== auth.currentUser.uid ? " (admin)" : ""}</button>
+</div>
+` : ""}
+`;
+
+tarjeta.onclick=function(){
+abrirHilo(doc.id);
+};
+
+return tarjeta;
+
+}
+
+let documentosVisibles=[];
+let contenedorVisible="";
+let mensajeVacioVisible="";
+
+async function renderizarListaHilos(documentos,contenedorId,mensajeVacio){
+
+documentosVisibles=documentos||[];
+contenedorVisible=contenedorId;
+mensajeVacioVisible=mensajeVacio;
+hilosRenderizados=0;
+
+const contenedor=document.getElementById(contenedorId);
+
+contenedor.innerHTML="";
+
+if(documentosVisibles.length===0){
+contenedor.innerHTML=`<p style="color:var(--text-muted)">${mensajeVacio || "No hay hilos para mostrar."}</p>`;
+return;
+}
+
+await mostrarMasHilos();
+
+}
+
+window.mostrarMasHilos=async function(){
+
+const contenedor=document.getElementById(contenedorVisible);
+
+if(!contenedor) return;
+
+const anterior=document.getElementById("boton-cargar-mas");
+if(anterior) anterior.remove();
+
+const siguiente=documentosVisibles.slice(hilosRenderizados,hilosRenderizados+HILOS_POR_PAGINA);
+
+for(const doc of siguiente){
+const tarjeta=await crearTarjetaHilo(doc);
+contenedor.appendChild(tarjeta);
+}
+
+hilosRenderizados+=siguiente.length;
+
+if(hilosRenderizados<documentosVisibles.length){
+const boton=document.createElement("button");
+boton.id="boton-cargar-mas";
+boton.className="boton-secundario";
+boton.type="button";
+boton.innerText=`Cargar más (${documentosVisibles.length-hilosRenderizados} restantes)`;
+boton.onclick=mostrarMasHilos;
+contenedor.appendChild(boton);
+}
+
+};
+
+function ordenarHilos(documentos,criterio){
+
+const copia=[...documentos];
+
+copia.sort((a,b)=>{
+const da=a.data(),db_=b.data();
+
+const fijadoA=da.fijado===true?1:0;
+const fijadoB=db_.fijado===true?1:0;
+
+if(fijadoA!==fijadoB) return fijadoB-fijadoA;
+
+if(criterio==="populares"){
+const puntosA=(Array.isArray(da.meGustaUids)?da.meGustaUids.length:0)-(Array.isArray(da.noMeGustaUids)?da.noMeGustaUids.length:0);
+const puntosB=(Array.isArray(db_.meGustaUids)?db_.meGustaUids.length:0)-(Array.isArray(db_.noMeGustaUids)?db_.noMeGustaUids.length:0);
+const popularidadA=puntosA*3+(Number(da.visitas)||0);
+const popularidadB=puntosB*3+(Number(db_.visitas)||0);
+if(popularidadA!==popularidadB) return popularidadB-popularidadA;
+}
+
+if(criterio==="activos"){
+const actividadA=da.ultimaActividad?.toDate?da.ultimaActividad.toDate().getTime():(da.fecha?.toDate?da.fecha.toDate().getTime():0);
+const actividadB=db_.ultimaActividad?.toDate?db_.ultimaActividad.toDate().getTime():(db_.fecha?.toDate?db_.fecha.toDate().getTime():0);
+if(actividadA!==actividadB) return actividadB-actividadA;
+}
+
+const fechaA=da.fecha?.toDate?da.fecha.toDate().getTime():0;
+const fechaB=db_.fecha?.toDate?db_.fecha.toDate().getTime():0;
+return fechaB-fechaA;
+});
+
+return copia;
+
+}
+
+window.reordenarHilosSeccion=async function(){
+const criterio=document.getElementById("orden-hilos").value;
+await renderizarListaHilos(ordenarHilos(hilosSeccionActual,criterio),"lista-hilos","Todavía no hay hilos en esta sección. ¡Sé el primero en publicar!");
+};
+
+window.cargarSeccion=async function(nombre){
+
+if(!descripcionesSeccion[nombre]) nombre="General";
+
+seccionActual=nombre;
+limpiarDatosEstructurados();
+actualizarUrl("seccion="+encodeURIComponent(nombre));
+
+const desc=descripcionesSeccion[nombre];
+actualizarMetadatosPagina(
+"MiMegaForo — "+nombre,
+desc+" Participa en MiMegaForo y conversa con otros usuarios."
+);
+
+document.getElementById("foro-content").style.setProperty("--sec-color",coloresSeccion[nombre]||"#ffb703");
+
+document.getElementById("foro-content").innerHTML=`
+<nav class="migas" aria-label="Migas de pan">
+<a href="./" onclick="mostrarInicio();return false;">Inicio</a> <span>›</span> <span>${escapeHTML(nombre)}</span>
+</nav>
+<h2>Sección: ${escapeHTML(nombre)}</h2>
+<p>${escapeHTML(desc)}</p>
+
+<div class="crear-hilo">
+<h3>✏️ Crear nuevo hilo</h3>
+<div class="form-group"><input type="text" id="nuevo-titulo" maxlength="150" placeholder="Título del hilo"></div>
+<div class="form-group"><textarea id="nuevo-contenido" maxlength="5000" placeholder="Escribe tu mensaje..."></textarea></div>
+<button onclick="crearHilo()">+ Publicar hilo</button>
+</div>
+
+<div class="barra-hilos">
+<h3 style="margin:0">Hilos de ${escapeHTML(nombre)}</h3>
+<select id="orden-hilos" onchange="reordenarHilosSeccion()">
+<option value="recientes">Más recientes</option>
+<option value="activos">Más activos</option>
+<option value="populares">Más votados</option>
+</select>
+</div>
+<div id="lista-hilos">Cargando hilos...</div>
+`;
+
+try{
+const querySnapshot=await db.collection("hilos").where("seccion","==",nombre).get();
+hilosSeccionActual=[...querySnapshot.docs];
+await renderizarListaHilos(ordenarHilos(hilosSeccionActual,"recientes"),"lista-hilos","Todavía no hay hilos en esta sección. ¡Sé el primero en publicar!");
+}catch(error){
+console.error(error);
+document.getElementById("lista-hilos").innerHTML=`
+<p class="error-texto">No se han podido cargar los hilos.<br><br>
+<small>${escapeHTML(error.code || "error")} — ${escapeHTML(error.message || "Error desconocido")}</small></p>`;
+}
+};
+
+window.buscarHilos=async function(event){
+
+if(event) event.preventDefault();
+
+const termino=document.getElementById("buscar-input").value.trim().toLowerCase();
+
+if(!termino) return;
+
+seccionActual=null;
+
+document.getElementById("foro-content").style.setProperty("--sec-color","#ffb703");
+
+document.getElementById("foro-content").innerHTML=`
+<button class="boton-volver" onclick="volverSeccion()">← Volver</button>
+<h2>Resultados para "${escapeHTML(termino)}"</h2>
+<div id="lista-hilos">Buscando...</div>
+`;
+
+try{
+
+const querySnapshot=await db.collection("hilos").get();
+
+const coincidencias=querySnapshot.docs.filter(doc=>{
+const d=doc.data();
+const titulo=(d.titulo||"").toLowerCase();
+const contenido=(d.contenido||"").toLowerCase();
+return titulo.includes(termino) || contenido.includes(termino);
+});
+
+await renderizarListaHilos(coincidencias,"lista-hilos",`No se encontraron hilos para "${escapeHTML(termino)}".`);
+
+}catch(error){
+
+console.error(error);
+
+document.getElementById("lista-hilos").innerHTML=`<p class="error-texto">No se ha podido completar la búsqueda.</p>`;
+
+}
+
+};
+
+window.abrirHilo=async function(hiloId){
+try{
+
+let hiloDoc=await db.collection("hilos").doc(hiloId).get();
+
+if(!hiloDoc.exists){
+alert("Este hilo ya no existe.");
+return;
+}
+
+let hilo=hiloDoc.data();
+
+try{
+await hiloDoc.ref.update({visitas:firebase.firestore.FieldValue.increment(1)});
+const hiloActualizado=await hiloDoc.ref.get();
+if(hiloActualizado.exists) hilo=hiloActualizado.data();
+}catch(errorVisitas){
+console.warn("No se ha podido registrar la visita:",errorVisitas);
+}
+
+seccionActual=hilo.seccion||null;
+actualizarUrl("hilo="+encodeURIComponent(hiloId));
+actualizarMetadatosPagina(
+(hilo.titulo||"MiMegaForo")+" — MiMegaForo",
+(hilo.contenido||"").slice(0,160)
+);
+ponerDatosEstructuradosHilo(hilo);
+
+document.getElementById("foro-content").innerHTML=`
+<div class="hilo-vista">
+<button class="boton-volver" onclick="volverSeccion()">← Volver a ${escapeHTML(hilo.seccion)}</button>
+<h2>${hilo.fijado===true?'<span class="insignia-fijado">📌 Fijado</span>':""}${hilo.cerrado===true?'<span class="insignia-cerrado">🔒 Cerrado</span>':""}${escapeHTML(hilo.titulo)}</h2>
+<div class="hilo-meta"><span class="autor-link" onclick="mostrarPerfil('${hilo.autorUid}')">👤 ${escapeHTML(hilo.autor)}</span>${hilo.fechaEdicion ? ' · <em>editado</em>' : ''}</div>
+<div class="metrica-hilo"><span>👁️ ${Number(hilo.visitas)||0} visitas</span></div>
+<div class="hilo-card">
+<p>${escapeHTML(hilo.contenido)}</p>
+
+<div class="votos" onclick="event.stopPropagation();">
+  <button class="voto-btn ${Array.isArray(hilo.meGustaUids) && auth.currentUser && hilo.meGustaUids.includes(auth.currentUser.uid) ? "activo" : ""}"
+    type="button" onclick="votarHilo('${hiloId}','meGusta')">👍 ${Array.isArray(hilo.meGustaUids) ? hilo.meGustaUids.length : 0}</button>
+  <button class="voto-btn ${Array.isArray(hilo.noMeGustaUids) && auth.currentUser && hilo.noMeGustaUids.includes(auth.currentUser.uid) ? "activo" : ""}"
+    type="button" onclick="votarHilo('${hiloId}','noMeGusta')">👎 ${Array.isArray(hilo.noMeGustaUids) ? hilo.noMeGustaUids.length : 0}</button>
+</div>
+
+${auth.currentUser && hilo.autorUid !== auth.currentUser.uid ? `
+<div class="votos"><button class="voto-btn btn-reportar" type="button" onclick="reportarContenido('hilo','${hiloId}',null)">🚩 Reportar</button></div>
+` : ""}
+${auth.currentUser && (hilo.autorUid === auth.currentUser.uid || esAdmin) ? `
+<div class="gestion-hilo" onclick="event.stopPropagation();">
+  ${hilo.autorUid === auth.currentUser.uid ? `<button class="btn-editar-hilo" type="button"
+    onclick="editarHilo('${hiloId}')">✏️ Editar</button>` : ""}
+  ${esAdmin ? `<button class="btn-editar-hilo" type="button" onclick="alternarFijado('${hiloId}')">${hilo.fijado===true?"📌 Desfijar":"📌 Fijar"}</button>` : ""}
+  ${esAdmin ? `<button class="btn-editar-hilo" type="button" onclick="alternarCerrado('${hiloId}')">${hilo.cerrado===true?"🔓 Reabrir":"🔒 Cerrar"}</button>` : ""}
+  <button class="btn-borrar-hilo" type="button"
+    onclick="borrarHilo('${hiloId}')">🗑️ Borrar${hilo.autorUid !== auth.currentUser.uid ? " (admin)" : ""}</button>
+</div>
+` : ""}
+</div>
+
+<div class="gestion-hilo">
+<button class="favorito-btn ${favoritosHiloIds.has(hiloId)?"activo":""}" data-hilo-id="${hiloId}" type="button" onclick="alternarFavorito('${hiloId}')">${favoritosHiloIds.has(hiloId)?"⭐ Quitar de favoritos":"☆ Añadir a favoritos"}</button>
+</div>
+
+<div class="respuestas">
+<h3>💬 Respuestas</h3>
+<div id="lista-respuestas">Cargando respuestas...</div>
+</div>
+
+<div class="crear-hilo">
+<h3>✍️ Responder</h3>
+${hilo.cerrado===true
+? `<p class="ayuda-texto">🔒 Este hilo está cerrado y no admite nuevas respuestas.</p>`
+: `<textarea id="nueva-respuesta" maxlength="5000" placeholder="Escribe tu respuesta..."></textarea>
+<button onclick="responderHilo('${escapeHTML(hiloId)}')">💬 Publicar respuesta</button>`}
+</div>
+</div>
+`;
+
+const snapshot=await db.collection("hilos").doc(hiloId)
+.collection("respuestas")
+.get();
+
+const lista=document.getElementById("lista-respuestas");
+lista.innerHTML="";
+
+if(snapshot.empty){
+lista.innerHTML='<p style="color:#666">Todavía no hay respuestas. ¡Sé el primero!</p>';
+return;
+}
+
+const docsRespuestas=snapshot.docs.slice().sort(function(a,b){
+const fa=a.data().fecha;
+const fb=b.data().fecha;
+const ta=fa && typeof fa.toMillis==="function" ? fa.toMillis() : 0;
+const tb=fb && typeof fb.toMillis==="function" ? fb.toMillis() : 0;
+return ta-tb;
+});
+
+docsRespuestas.forEach(function(doc){
+const respuesta=doc.data();
+const tarjeta=document.createElement("div");
+tarjeta.className="respuesta-card";
+tarjeta.innerHTML=`
+<div class="respuesta-meta"><span class="autor-link" onclick="mostrarPerfil('${respuesta.autorUid}')">👤 ${escapeHTML(respuesta.autor)}</span>${respuesta.fechaEdicion ? ' · <em>editado</em>' : ''}</div>
+<p>${escapeHTML(respuesta.contenido)}</p>
+
+<div class="votos" onclick="event.stopPropagation();">
+  <button class="voto-btn ${Array.isArray(respuesta.meGustaUids) && auth.currentUser && respuesta.meGustaUids.includes(auth.currentUser.uid) ? "activo" : ""}"
+    type="button" onclick="votarRespuesta('${hiloId}','${doc.id}','meGusta')">👍 ${Array.isArray(respuesta.meGustaUids) ? respuesta.meGustaUids.length : 0}</button>
+  <button class="voto-btn ${Array.isArray(respuesta.noMeGustaUids) && auth.currentUser && respuesta.noMeGustaUids.includes(auth.currentUser.uid) ? "activo" : ""}"
+    type="button" onclick="votarRespuesta('${hiloId}','${doc.id}','noMeGusta')">👎 ${Array.isArray(respuesta.noMeGustaUids) ? respuesta.noMeGustaUids.length : 0}</button>
+</div>
+
+${auth.currentUser && respuesta.autorUid !== auth.currentUser.uid ? `
+<div class="votos"><button class="voto-btn btn-reportar" type="button" onclick="reportarContenido('respuesta','${hiloId}','${doc.id}')">🚩 Reportar</button></div>
+` : ""}
+${auth.currentUser && (respuesta.autorUid === auth.currentUser.uid || esAdmin) ? `
+<div class="gestion-respuesta" onclick="event.stopPropagation();">
+  ${respuesta.autorUid === auth.currentUser.uid ? `<button class="btn-editar-respuesta" type="button"
+    onclick="editarRespuesta('${hiloId}','${doc.id}')">✏️ Editar</button>` : ""}
+  <button class="btn-borrar-respuesta" type="button"
+    onclick="borrarRespuesta('${hiloId}','${doc.id}')">🗑️ Borrar${respuesta.autorUid !== auth.currentUser.uid ? " (admin)" : ""}</button>
+</div>
+` : ""}
+`;
+lista.appendChild(tarjeta);
+});
+
+}catch(error){
+console.error(error);
+document.getElementById("foro-content").innerHTML=`
+<p class="error-texto">No se ha podido abrir el hilo.</p>
+<button class="boton-volver" onclick="volverSeccion()">← Volver</button>
+`;
+}
+};
+
+window.volverSeccion=function(){
+if(seccionActual){
+cargarSeccion(seccionActual);
+}else{
+mostrarInicio();
+}
+};
+
+window.responderHilo=async function(hiloId){
+if(!usuarioLogueado){
+alert("Debes iniciar sesión y verificar tu correo para responder.");
+return;
+}
+
+const contenido=document.getElementById("nueva-respuesta").value.trim();
+
+if(!contenido){
+alert("Debes escribir una respuesta.");
+return;
+}
+
+const estadoCuenta=await comprobarCuentaActiva(usuarioLogueado.uid);
+if(!estadoCuenta.ok){
+alert(estadoCuenta.mensaje);
+return;
+}
+
+const hiloAntes=await db.collection("hilos").doc(hiloId).get();
+if(hiloAntes.exists && hiloAntes.data().cerrado===true){
+alert("Este hilo está cerrado y no admite nuevas respuestas.");
+return;
+}
+
+const claveSpam="mimegaforo_ultima_respuesta_"+usuarioLogueado.uid+"_"+hiloId;
+let ultimaRespuesta=0;
+try{ultimaRespuesta=Number(localStorage.getItem(claveSpam)||0);}catch(error){console.error(error);}
+if(Date.now()-ultimaRespuesta<10000){
+alert("Espera unos segundos antes de publicar otra respuesta.");
+return;
+}
+
+try{
+
+const usuarioDoc=await db.collection("usuarios").doc(usuarioLogueado.uid).get();
+
+let username="Usuario";
+
+if(usuarioDoc.exists){
+username=usuarioDoc.data().username;
+}
+
+const datosRespuesta={
+contenido:contenido,
+autor:username,
+autorUid:usuarioLogueado.uid,
+fecha:firebase.firestore.FieldValue.serverTimestamp()
+};
+
+await db.collection("hilos").doc(hiloId).collection("respuestas").add(datosRespuesta);
+
+await db.collection("hilos").doc(hiloId).update({
+numRespuestas:firebase.firestore.FieldValue.increment(1),
+ultimaActividad:firebase.firestore.FieldValue.serverTimestamp()
+});
+
+const hiloDoc=await db.collection("hilos").doc(hiloId).get();
+
+if(hiloDoc.exists){
+const hiloDatos=hiloDoc.data();
+if(hiloDatos.autorUid && hiloDatos.autorUid!==usuarioLogueado.uid){
+try{
+await db.collection("notificaciones").add({
+paraUid:hiloDatos.autorUid,
+tipo:"respuesta",
+hiloId:hiloId,
+hiloTitulo:hiloDatos.titulo||"",
+deUid:usuarioLogueado.uid,
+deUsername:username,
+leida:false,
+fecha:firebase.firestore.FieldValue.serverTimestamp()
+});
+}catch(errorNotif){
+console.error(errorNotif);
+}
+}
+}
+
+try{localStorage.setItem(claveSpam,String(Date.now()));}catch(error){console.error(error);}
+
+abrirHilo(hiloId);
+
+}catch(error){
+console.error(error);
+alert("No se ha podido publicar la respuesta.");
+}
+};
+
+window.crearHilo=async function(){
+
+if(!usuarioLogueado){
+
+alert("Debes iniciar sesión y verificar tu correo para publicar.");
+
+return;
+
+}
+
+const titulo=document.getElementById("nuevo-titulo").value.trim();
+const contenido=document.getElementById("nuevo-contenido").value.trim();
+
+if(!titulo||!contenido){
+
+alert("Debes escribir un título y un mensaje.");
+
+return;
+
+}
+
+const estadoCuenta=await comprobarCuentaActiva(usuarioLogueado.uid);
+if(!estadoCuenta.ok){
+alert(estadoCuenta.mensaje);
+return;
+}
+
+const claveSpam="mimegaforo_ultimo_hilo_"+usuarioLogueado.uid;
+let ultimoHilo=0;
+try{ultimoHilo=Number(localStorage.getItem(claveSpam)||0);}catch(error){console.error(error);}
+if(Date.now()-ultimoHilo<30000){
+alert("Espera unos segundos antes de publicar otro hilo.");
+return;
+}
+
+try{
+
+const usuarioDoc=await db.collection("usuarios")
+.doc(usuarioLogueado.uid)
+.get();
+
+let username="Usuario";
+
+if(usuarioDoc.exists){
+username=usuarioDoc.data().username;
+}
+
+const datosHilo={
+
+titulo:titulo,
+contenido:contenido,
+autor:username,
+autorUid:usuarioLogueado.uid,
+seccion:seccionActual,
+fecha:firebase.firestore.FieldValue.serverTimestamp(),
+ultimaActividad:firebase.firestore.FieldValue.serverTimestamp(),
+fijado:false,
+cerrado:false
+
+};
+
+await db.collection("hilos").add(datosHilo);
+
+try{localStorage.setItem(claveSpam,String(Date.now()));}catch(error){console.error(error);}
+
+alert("¡Hilo publicado correctamente!");
+
+cargarSeccion(seccionActual);
+
+}catch(error){
+
+console.error(error);
+
+alert("No se ha podido publicar el hilo.");
+
+}
+
+};
+
+
+async function actualizarVoto(ref, tipo){
+  if(!usuarioLogueado){
+    alert("Debes iniciar sesión para votar.");
+    return;
+  }
+
+  const estadoCuenta=await comprobarCuentaActiva(usuarioLogueado.uid);
+  if(!estadoCuenta.ok){
+    alert(estadoCuenta.mensaje);
+    return;
+  }
+
+  try{
+    await db.runTransaction(async transaction=>{
+      const doc=await transaction.get(ref);
+      if(!doc.exists) throw new Error("El contenido ya no existe.");
+
+      const datos=doc.data();
+      const uid=usuarioLogueado.uid;
+
+      let meGusta=Array.isArray(datos.meGustaUids) ? [...datos.meGustaUids] : [];
+      let noMeGusta=Array.isArray(datos.noMeGustaUids) ? [...datos.noMeGustaUids] : [];
+
+      const listaActiva = tipo==="meGusta" ? meGusta : noMeGusta;
+      const otraLista = tipo==="meGusta" ? noMeGusta : meGusta;
+
+      const indiceActiva=listaActiva.indexOf(uid);
+      const indiceOtra=otraLista.indexOf(uid);
+
+      if(indiceActiva !== -1){
+        listaActiva.splice(indiceActiva,1);
+      }else{
+        if(indiceOtra !== -1) otraLista.splice(indiceOtra,1);
+        listaActiva.push(uid);
+      }
+
+      transaction.update(ref,{
+        meGustaUids:meGusta,
+        noMeGustaUids:noMeGusta
+      });
+    });
+  }catch(error){
+    console.error(error);
+    alert("No se ha podido guardar tu voto: " + (error.message || "Error desconocido"));
+  }
+}
+
+window.votarHilo=async function(hiloId,tipo){
+  await actualizarVoto(db.collection("hilos").doc(hiloId),tipo);
+  if(document.getElementById("lista-hilos")){
+    await cargarSeccion(seccionActual);
+  }else{
+    await abrirHilo(hiloId);
+  }
+};
+
+window.votarRespuesta=async function(hiloId,respuestaId,tipo){
+  await actualizarVoto(
+    db.collection("hilos").doc(hiloId).collection("respuestas").doc(respuestaId),
+    tipo
+  );
+  await abrirHilo(hiloId);
+};
+
+window.alternarFijado=async function(hiloId){
+if(!esAdmin){
+alert("Solo los administradores pueden fijar hilos.");
+return;
+}
+try{
+const ref=db.collection("hilos").doc(hiloId);
+const doc=await ref.get();
+if(!doc.exists){alert("El hilo ya no existe.");return;}
+const nuevo=doc.data().fijado!==true;
+await ref.update({fijado:nuevo});
+await cargarSeccion(doc.data().seccion);
+}catch(error){
+console.error(error);
+alert("No se ha podido cambiar el estado de fijado.");
+}
+};
+
+window.alternarCerrado=async function(hiloId){
+if(!esAdmin){
+alert("Solo los administradores pueden cerrar hilos.");
+return;
+}
+try{
+const ref=db.collection("hilos").doc(hiloId);
+const doc=await ref.get();
+if(!doc.exists){alert("El hilo ya no existe.");return;}
+const nuevo=doc.data().cerrado!==true;
+await ref.update({cerrado:nuevo});
+await abrirHilo(hiloId);
+}catch(error){
+console.error(error);
+alert("No se ha podido cambiar el estado del hilo.");
+}
+};
+
+window.mostrarInicio=async function(){
+
+seccionActual=null;
+limpiarDatosEstructurados();
+actualizarUrl("");
+actualizarMetadatosPagina(
+"MiMegaForo — Foro gratuito en español",
+"MiMegaForo es un foro gratuito en español para debatir y compartir sobre política, deportes, música, cine, videojuegos, fotografía, cocina y mucho más."
+);
+
+const foro=document.getElementById("foro-content");
+foro.style.setProperty("--sec-color","#ffb703");
+
+foro.innerHTML=`
+<div class="portada-intro">
+<h2>🔥 Bienvenido a MiMegaForo</h2>
+<p>MiMegaForo es un foro gratuito en español para conversar, debatir y compartir ideas sobre temas de actualidad, ocio, tecnología y vida cotidiana.</p>
+<p>Aquí encontrarás conversaciones abiertas sobre política, deportes, economía, música, cine, videojuegos, informática, cocina, fitness, fotografía, memes y más.</p>
+<div class="portada-cta">
+<a href="?seccion=General" onclick="cargarSeccion('General');return false;">💬 Entrar al foro</a>
+
+</div>
+</div>
+
+<section class="portada-seccion" aria-labelledby="que-es-mimegaforo">
+<h2 id="que-es-mimegaforo">¿Qué es MiMegaForo?</h2>
+<p>Un espacio para leer conversaciones, participar en debates y descubrir opiniones de otros usuarios. Las publicaciones se organizan por categorías para que sea fácil encontrar temas relacionados con tus intereses.</p>
+</section>
+
+<section class="portada-seccion" aria-labelledby="categorias-mimegaforo">
+<h2 id="categorias-mimegaforo">📚 Categorías del foro</h2>
+<p>Explora las secciones de MiMegaForo y entra directamente en la conversación que te interese.</p>
+<div class="categorias-grid">
+${Object.keys(descripcionesSeccion).map(nombre=>{
+const iconos={"General":"💬","Política":"⚖️","Deportes":"⚽","Famosos":"⭐","Economía":"📈","Música":"🎵","Cine":"🎬","Videojuegos":"🎮","Informática":"💻","Cocina":"🍳","Fitness":"💪","Fotografía":"📷","Memes":"😂"};
+return `<a class="categoria-portada" style="--sec-color:${coloresSeccion[nombre]||"#8b5cf6"}" href="?seccion=${encodeURIComponent(nombre)}" onclick="cargarSeccion('${nombre.replace(/'/g,"\\'")}');return false;"><strong>${iconos[nombre]} ${escapeHTML(nombre)}</strong><span>${escapeHTML(descripcionesSeccion[nombre])}</span></a>`;
+}).join("")}
+</div>
+</section>
+
+<section class="portada-seccion" aria-labelledby="como-funciona">
+<h2 id="como-funciona">🧭 ¿Cómo funciona el foro?</h2>
+<div class="portada-pasos">
+<div class="paso-portada"><strong>1. Explora</strong><p>Elige una categoría y lee los hilos que más te interesen.</p></div>
+<div class="paso-portada"><strong>2. Participa</strong><p>Crea una cuenta, verifica tu correo y participa en las conversaciones.</p></div>
+<div class="paso-portada"><strong>3. Contribuye</strong><p>Comparte opiniones útiles, respeta a los demás y ayuda a mantener una comunidad de calidad.</p></div>
+</div>
+</section>
+
+<section class="portada-seccion" aria-labelledby="convivencia">
+<h2 id="convivencia">🛡️ Una comunidad moderada</h2>
+<div class="bloque-info">MiMegaForo cuenta con normas de convivencia, herramientas para reportar contenido y moderación para mantener las conversaciones dentro de las reglas del foro.</div>
+</section>
+
+<section class="portada-seccion"><div class="portada-bloque"><h3>📌 Hilos destacados</h3><div id="portada-destacados"><p class="ayuda-texto">Cargando hilos destacados...</p></div></div></section>
+<section class="portada-seccion"><div class="portada-bloque"><h3>🔥 Tendencias</h3><p class="ayuda-texto">Conversaciones que están generando actividad recientemente.</p><div id="portada-tendencias"><p class="ayuda-texto">Cargando tendencias...</p></div></div></section>
+<section class="portada-seccion"><div class="portada-bloque"><h3>🕒 Actividad reciente</h3><div id="portada-activos"><p class="ayuda-texto">Cargando actividad...</p></div></div></section>
+<section class="portada-seccion"><div class="portada-bloque"><h3>📊 Comunidad</h3><div id="portada-estadisticas"><p class="ayuda-texto">Cargando estadísticas...</p></div></div></section>
+<section class="portada-seccion" aria-labelledby="participacion-calidad">
+<h2 id="participacion-calidad">💡 Cómo participar y aportar valor</h2>
+<p>MiMegaForo está pensado para conversaciones en las que el contenido de cada publicación aporte algo útil a los demás participantes.</p>
+<div class="portada-pasos">
+<div class="paso-portada"><strong>Escribe títulos claros</strong><p>Un título concreto ayuda a que otras personas entiendan el tema y encuentren la conversación después.</p></div>
+<div class="paso-portada"><strong>Aporta contexto</strong><p>Explica tu pregunta, opinión o experiencia con suficiente detalle para facilitar respuestas de calidad.</p></div>
+<div class="paso-portada"><strong>Respeta el debate</strong><p>Las diferencias de opinión forman parte de un foro, pero siempre deben mantenerse dentro de las normas de convivencia.</p></div>
+</div>
+</section>
+
+<section class="portada-seccion" aria-labelledby="preguntas-frecuentes">
+<h2 id="preguntas-frecuentes">❓ Preguntas frecuentes</h2>
+<div class="portada-bloque">
+<h3>¿Puedo leer el foro sin registrarme?</h3>
+<p>Sí. Las categorías y las conversaciones publicadas pueden consultarse públicamente. Para crear hilos, responder, votar o utilizar funciones de cuenta necesitas iniciar sesión.</p>
+
+<h3>¿Por qué se verifica el correo electrónico?</h3>
+<p>La verificación ayuda a mantener las cuentas más seguras y reduce el uso abusivo del registro.</p>
+
+<h3>¿Qué ocurre si encuentro contenido que incumple las normas?</h3>
+<p>Puedes utilizar la opción 🚩 Reportar disponible junto al contenido. El equipo de moderación puede revisar, editar o retirar publicaciones y suspender cuentas cuando corresponda.</p>
+
+<h3>¿Puedo eliminar mi cuenta?</h3>
+<p>Sí. Desde Configuración puedes solicitar la eliminación de la cuenta y del contenido asociado siguiendo el proceso de confirmación.</p>
+</div>
+</section>
+
+<section class="portada-seccion" aria-labelledby="contenido-publico">
+<h2 id="contenido-publico">🔎 Contenido público y moderado</h2>
+<div class="bloque-info">
+Los hilos y respuestas publicados en MiMegaForo forman parte de una comunidad abierta. La participación requiere una cuenta verificada, mientras que la lectura de las conversaciones no requiere iniciar sesión. Todo el contenido debe respetar las normas del foro y las leyes aplicables.
+</div>
+</section>
+
+`;
+
+try{
+const [hilosSnap,usuariosSnap]=await Promise.all([
+db.collection("hilos").get(),
+db.collection("usuarios").get()
+]);
+
+const docs=[...hilosSnap.docs];
+const totalHilos=docs.length;
+let totalRespuestas=0;
+docs.forEach(d=>{
+totalRespuestas+=typeof d.data().numRespuestas==="number"?d.data().numRespuestas:0;
+});
+
+const fijados=docs.filter(d=>d.data().fijado===true).sort((a,b)=>{
+const fa=a.data().fecha?.toDate?a.data().fecha.toDate().getTime():0;
+const fb=b.data().fecha?.toDate?b.data().fecha.toDate().getTime():0;
+return fb-fa;
+}).slice(0,5);
+
+const totalVisitas=docs.reduce((total,d)=>total+(Number(d.data().visitas)||0),0);
+
+const tendencias=[...docs].sort((a,b)=>{
+const da=a.data(),db_=b.data();
+const now=Date.now();
+const fechaA=da.fecha?.toDate?da.fecha.toDate().getTime():0;
+const fechaB=db_.fecha?.toDate?db_.fecha.toDate().getTime():0;
+const edadA=Math.max(0,(now-fechaA)/86400000);
+const edadB=Math.max(0,(now-fechaB)/86400000);
+const likesA=Array.isArray(da.meGustaUids)?da.meGustaUids.length:0;
+const dislikesA=Array.isArray(da.noMeGustaUids)?da.noMeGustaUids.length:0;
+const likesB=Array.isArray(db_.meGustaUids)?db_.meGustaUids.length:0;
+const dislikesB=Array.isArray(db_.noMeGustaUids)?db_.noMeGustaUids.length:0;
+const respuestasA=Number(da.numRespuestas)||0;
+const respuestasB=Number(db_.numRespuestas)||0;
+const visitasA=Number(da.visitas)||0;
+const visitasB=Number(db_.visitas)||0;
+const scoreA=visitasA+(respuestasA*5)+(likesA*4)-(dislikesA*2)+(edadA<7?(7-edadA)*2:0);
+const scoreB=visitasB+(respuestasB*5)+(likesB*4)-(dislikesB*2)+(edadB<7?(7-edadB)*2:0);
+return scoreB-scoreA;
+}).slice(0,5);
+
+const activos=[...docs].sort((a,b)=>{
+const da=a.data(),db_=b.data();
+const fa=da.ultimaActividad?.toDate?da.ultimaActividad.toDate().getTime():(da.fecha?.toDate?da.fecha.toDate().getTime():0);
+const fb=db_.ultimaActividad?.toDate?db_.ultimaActividad.toDate().getTime():(db_.fecha?.toDate?db_.fecha.toDate().getTime():0);
+return fb-fa;
+}).slice(0,5);
+
+const d=document.getElementById("portada-destacados");
+if(fijados.length===0){
+d.innerHTML=`<p class="ayuda-texto">Todavía no hay hilos fijados. Los administradores pueden destacar conversaciones importantes desde el panel de moderación.</p>`;
+}else{
+d.innerHTML="";
+for(const doc of fijados) d.appendChild(await crearTarjetaHilo(doc));
+}
+
+const t=document.getElementById("portada-tendencias");
+t.innerHTML="";
+if(tendencias.length===0){
+t.innerHTML=`<p class="ayuda-texto">Todavía no hay suficientes hilos para mostrar tendencias.</p>`;
+}else{
+for(let i=0;i<tendencias.length;i++){
+const tarjeta=await crearTarjetaHilo(tendencias[i]);
+tarjeta.classList.add("tendencia-card");
+const numero=document.createElement("div");
+numero.className="tendencia-numero";
+numero.innerText=String(i+1);
+tarjeta.appendChild(numero);
+t.appendChild(tarjeta);
+}
+}
+
+const a=document.getElementById("portada-activos");
+a.innerHTML="";
+if(activos.length===0){
+a.innerHTML=`<p class="ayuda-texto">Todavía no hay actividad.</p>`;
+}else{
+for(const doc of activos) a.appendChild(await crearTarjetaHilo(doc));
+}
+
+const est=document.getElementById("portada-estadisticas");
+est.innerHTML=`
+<div class="portada-estadisticas">
+<div class="portada-estadistica"><strong>${totalHilos}</strong>Hilos</div>
+<div class="portada-estadistica"><strong>${totalRespuestas}</strong>Respuestas</div>
+<div class="portada-estadistica"><strong>${totalVisitas}</strong>Visitas</div>
+<div class="portada-estadistica"><strong>${usuariosSnap.size}</strong>Usuarios</div>
+</div>
+`;
+
+}catch(error){
+console.error(error);
+["portada-destacados","portada-tendencias","portada-activos","portada-estadisticas"].forEach(id=>{
+const el=document.getElementById(id);
+if(el) el.innerHTML=`<p class="error-texto">No se ha podido cargar la actividad en este momento.</p>`;
+});
+}
+};
+
+window.editarRespuesta=async function(hiloId,respuestaId){
+if(!usuarioLogueado){
+alert("Debes iniciar sesión.");
+return;
+}
+try{
+const ref=db.collection("hilos").doc(hiloId).collection("respuestas").doc(respuestaId);
+const doc=await ref.get();
+if(!doc.exists){
+alert("La respuesta ya no existe.");
+return;
+}
+const datos=doc.data();
+if(datos.autorUid!==usuarioLogueado.uid){
+alert("Solo puedes editar tus propias respuestas.");
+return;
+}
+const nuevo=prompt("Edita tu respuesta:",datos.contenido||"");
+if(nuevo===null) return;
+const contenido=nuevo.trim();
+if(!contenido){
+alert("La respuesta no puede estar vacía.");
+return;
+}
+await ref.update({
+contenido:contenido,
+fechaEdicion:firebase.firestore.FieldValue.serverTimestamp()
+});
+await abrirHilo(hiloId);
+}catch(error){
+console.error(error);
+alert("No se ha podido editar la respuesta.");
+}
+};
+
+window.borrarRespuesta=async function(hiloId,respuestaId){
+if(!usuarioLogueado){
+alert("Debes iniciar sesión.");
+return false;
+}
+if(!confirm("¿Seguro que quieres borrar esta respuesta?")) return false;
+try{
+const ref=db.collection("hilos").doc(hiloId).collection("respuestas").doc(respuestaId);
+const doc=await ref.get();
+if(!doc.exists){
+alert("La respuesta ya no existe (puede que ya la borraras antes).");
+return true;
+}
+if(doc.data().autorUid!==usuarioLogueado.uid && !esAdmin){
+alert("Solo puedes borrar tus propias respuestas.");
+return false;
+}
+await ref.delete();
+await db.collection("hilos").doc(hiloId).update({
+numRespuestas:firebase.firestore.FieldValue.increment(-1)
+});
+await abrirHilo(hiloId);
+return true;
+}catch(error){
+console.error(error);
+alert("No se ha podido borrar la respuesta.");
+return false;
+}
+};
+
+async function actualizarBotonesFavorito(hiloId){
+const activo=favoritosHiloIds.has(hiloId);
+document.querySelectorAll('.favorito-btn[data-hilo-id="'+hiloId+'"]').forEach(function(boton){
+boton.classList.toggle("activo",activo);
+boton.innerText=activo?"⭐ Quitar de favoritos":"☆ Añadir a favoritos";
+});
+}
+
+window.alternarFavorito=async function(hiloId){
+if(!usuarioLogueado){
+alert("Debes iniciar sesión para guardar favoritos.");
+return;
+}
+
+const estadoCuenta=await comprobarCuentaActiva(usuarioLogueado.uid);
+if(!estadoCuenta.ok){
+alert(estadoCuenta.mensaje);
+return;
+}
+
+const ref=db.collection("usuarios").doc(usuarioLogueado.uid);
+const eraFavorito=favoritosHiloIds.has(hiloId);
+
+try{
+if(eraFavorito){
+await ref.update({favoritosHiloIds:firebase.firestore.FieldValue.arrayRemove(hiloId)});
+favoritosHiloIds.delete(hiloId);
+}else{
+await ref.set({favoritosHiloIds:firebase.firestore.FieldValue.arrayUnion(hiloId)},{merge:true});
+favoritosHiloIds.add(hiloId);
+}
+await actualizarBotonesFavorito(hiloId);
+}catch(error){
+console.error(error);
+alert("No se ha podido actualizar el favorito. Comprueba que tienes permisos de escritura en tu perfil de Firebase.");
+}
+};
+
+window.mostrarFavoritos=async function(){
+seccionActual=null;
+document.title="Mis favoritos — MiMegaForo";
+const metaDescripcion=document.querySelector('meta[name="description"]');
+if(metaDescripcion){
+metaDescripcion.setAttribute("content","Tus hilos favoritos de MiMegaForo.");
+}
+
+const foro=document.getElementById("foro-content");
+foro.style.setProperty("--sec-color","#ffb703");
+
+if(!usuarioLogueado){
+foro.innerHTML=`
+<h2>⭐ Mis favoritos</h2>
+<div class="favoritos-vacio">Debes iniciar sesión para guardar y consultar tus hilos favoritos.</div>
+`;
+return;
+}
+
+foro.innerHTML=`
+<button class="boton-volver" onclick="mostrarInicio()">← Volver al inicio</button>
+<h2>⭐ Mis favoritos</h2>
+<div id="lista-favoritos">Cargando tus favoritos...</div>
+`;
+
+try{
+const ids=[...favoritosHiloIds];
+const resultados=await Promise.all(ids.map(async function(id){
+try{
+const doc=await db.collection("hilos").doc(id).get();
+return doc.exists?doc:null;
+}catch(error){
+console.error(error);
+return null;
+}
+}));
+
+const docs=resultados.filter(Boolean);
+const lista=document.getElementById("lista-favoritos");
+if(!lista) return;
+
+if(docs.length===0){
+lista.innerHTML=`<div class="favoritos-vacio">Todavía no tienes hilos favoritos. Cuando pulses “☆ Añadir a favoritos”, aparecerán aquí.</div>`;
+return;
+}
+
+docs.sort(function(a,b){
+const fa=a.data().fecha?.toDate?a.data().fecha.toDate().getTime():0;
+const fb=b.data().fecha?.toDate?b.data().fecha.toDate().getTime():0;
+return fb-fa;
+});
+
+lista.innerHTML="";
+for(const doc of docs){
+lista.appendChild(await crearTarjetaHilo(doc));
+}
+}catch(error){
+console.error(error);
+const lista=document.getElementById("lista-favoritos");
+if(lista) lista.innerHTML=`<p class="error-texto">No se han podido cargar tus favoritos.</p>`;
+}
+};
+
+/* =========================
+   MODERACIÓN
+   ========================= */
+
+window.abrirNotificaciones=async function(){
+
+if(!usuarioLogueado){
+alert("Debes iniciar sesión.");
+return;
+}
+
+seccionActual=null;
+
+document.getElementById("foro-content").innerHTML=`
+<button class="boton-volver" onclick="volverSeccion()">← Volver</button>
+<h2>🔔 Notificaciones</h2>
+<div id="lista-notificaciones">Cargando...</div>
+`;
+
+try{
+
+const snapshot=await db.collection("notificaciones")
+.where("paraUid","==",usuarioLogueado.uid).get();
+
+const lista=document.getElementById("lista-notificaciones");
+
+if(snapshot.empty){
+lista.innerHTML=`<p style="color:var(--text-muted)">No tienes notificaciones todavía.</p>`;
+return;
+}
+
+const docs=[...snapshot.docs].sort((a,b)=>{
+const fa=a.data().fecha?.toMillis ? a.data().fecha.toMillis() : 0;
+const fb=b.data().fecha?.toMillis ? b.data().fecha.toMillis() : 0;
+return fb-fa;
+});
+
+lista.innerHTML="";
+
+docs.forEach(doc=>{
+const n=doc.data();
+const tarjeta=document.createElement("div");
+tarjeta.className="hilo-card hilo-link"+(n.leida?"":" notif-nueva");
+tarjeta.innerHTML=`
+<p>${n.leida?"":"🔵 "}<strong>${escapeHTML(n.deUsername||"Alguien")}</strong> respondió a tu hilo "<strong>${escapeHTML(n.hiloTitulo||"")}</strong>"</p>
+<div class="hilo-meta">Toca para verlo</div>
+`;
+tarjeta.onclick=async function(){
+if(!n.leida){
+try{ await doc.ref.update({leida:true}); }catch(error){ console.error(error); }
+}
+abrirHilo(n.hiloId);
+};
+lista.appendChild(tarjeta);
+});
+
+}catch(error){
+console.error(error);
+document.getElementById("lista-notificaciones").innerHTML=`<p class="error-texto">No se han podido cargar las notificaciones.</p>`;
+}
+
+};
+
+window.abrirNormas=function(){
+
+const seccionAnterior=seccionActual;
+
+seccionActual=null;
+
+document.getElementById("foro-content").innerHTML=`
+<button class="boton-volver" onclick="${seccionAnterior ? `cargarSeccion('${seccionAnterior}')` : "volverSeccion()"}">← Volver</button>
+<h2>📜 Normas del foro</h2>
+
+<div class="hilo-card" style="cursor:default">
+<h3>1. Respeto ante todo</h3>
+<p>Se puede debatir con dureza, pero no insultar, acosar ni amenazar a otras personas. Los ataques personales, el discurso de odio y el acoso se borran y pueden llevar a la expulsión.</p>
+</div>
+
+<div class="hilo-card" style="cursor:default">
+<h3>2. Nada de contenido ilegal</h3>
+<p>Está prohibido publicar o enlazar contenido ilegal, contenido sexual de menores (tolerancia cero, se reporta a las autoridades), incitación a la violencia, o cualquier cosa que infrinja la ley.</p>
+</div>
+
+<div class="hilo-card" style="cursor:default">
+<h3>3. Contenido apto para todos los públicos</h3>
+<p>MiMegaForo no admite contenido sexual o para adultos. Todo el contenido publicado debe ser apto para todos los públicos.</p>
+</div>
+
+<div class="hilo-card" style="cursor:default">
+<h3>4. Nada de spam ni publicidad</h3>
+<p>No se permite publicidad no solicitada, enlaces de afiliados, ni publicar el mismo mensaje repetidamente en varios hilos o secciones.</p>
+</div>
+
+<div class="hilo-card" style="cursor:default">
+<h3>5. Privacidad de los demás</h3>
+<p>No compartas datos personales de otras personas (direcciones, teléfonos, fotos privadas...) sin su permiso.</p>
+</div>
+
+<div class="hilo-card" style="cursor:default">
+<h3>6. Reportar y moderación</h3>
+<p>Si ves contenido que incumple estas normas, usa el botón 🚩 Reportar. El equipo de moderación puede editar, borrar contenido o suspender cuentas que incumplan estas normas, sin previo aviso.</p>
+</div>
+
+<p style="color:var(--text-muted);font-size:.85rem;margin-top:1rem">
+Al crear una cuenta en MiMegaForo, aceptas estas normas. Pueden actualizarse en cualquier momento.
+</p>
+`;
+
+};
+
+function abrirPaginaLegal(titulo,htmlContenido){
+
+const seccionAnterior=seccionActual;
+
+seccionActual=null;
+
+document.getElementById("foro-content").innerHTML=`
+<button class="boton-volver" onclick="${seccionAnterior ? `cargarSeccion('${seccionAnterior}')` : "volverSeccion()"}">← Volver</button>
+<h2>${titulo}</h2>
+${htmlContenido}
+`;
+
+}
+
+window.abrirAvisoLegal=function(){
+
+abrirPaginaLegal("⚖️ Aviso legal",`
+
+<div class="hilo-card" style="cursor:default">
+<h3>Titular del sitio</h3>
+<p>
+<strong>Siegfried</strong><br>
+Correo de contacto: siegfriedwebia@gmail.com
+</p>
+</div>
+
+<div class="hilo-card" style="cursor:default">
+<h3>Objeto</h3>
+<p>MiMegaForo es un foro de debate en línea donde las personas registradas pueden publicar hilos y respuestas sobre distintos temas, organizados por secciones.</p>
+</div>
+
+<div class="hilo-card" style="cursor:default">
+<h3>Condiciones de uso</h3>
+<p>El acceso y uso de MiMegaForo atribuye la condición de usuario y supone la aceptación de este aviso legal, de las <a href="#" onclick="abrirNormas();return false;">Normas del foro</a> y de la <a href="#" onclick="abrirPrivacidad();return false;">Política de privacidad</a>. El uso del foro está reservado a mayores de edad.</p>
+</div>
+
+<div class="hilo-card" style="cursor:default">
+<h3>Contenido publicado por usuarios</h3>
+<p>Los hilos y respuestas son responsabilidad exclusiva de quien los publica. El titular del sitio no se hace responsable de las opiniones o contenidos publicados por terceros, sin perjuicio de que pueda retirarlos si incumplen la ley o las normas del foro, según lo descrito en el apartado de moderación.</p>
+</div>
+
+<div class="hilo-card" style="cursor:default">
+<h3>Propiedad intelectual</h3>
+<p>El diseño, el código y los elementos gráficos propios de MiMegaForo pertenecen a su titular. Los usuarios conservan los derechos sobre el contenido que publican, y al publicarlo conceden al foro una licencia para mostrarlo dentro del propio sitio.</p>
+</div>
+
+<div class="hilo-card" style="cursor:default">
+<h3>Legislación aplicable</h3>
+<p>Este aviso legal se rige por la legislación española. Para cualquier controversia, las partes se someten a los juzgados y tribunales que correspondan según la ley.</p>
+</div>
+
+`);
+
+};
+
+window.abrirPrivacidad=function(){
+
+abrirPaginaLegal("🔒 Política de privacidad",`
+
+<div class="hilo-card" style="cursor:default">
+<h3>Responsable del tratamiento</h3>
+<p>MiMegaForo — siegfriedwebia@gmail.com. Ver más datos en el <a href="#" onclick="abrirAvisoLegal();return false;">Aviso legal</a>.</p>
+</div>
+
+<div class="hilo-card" style="cursor:default">
+<h3>¿Qué datos recogemos?</h3>
+<p>Al registrarte: nombre de usuario, correo electrónico y contraseña (la contraseña la gestiona Firebase Authentication de forma cifrada; nunca la vemos en texto plano). Al usar el foro: los hilos, respuestas y votos que publiques, asociados a tu cuenta.</p>
+</div>
+
+<div class="hilo-card" style="cursor:default">
+<h3>¿Para qué los usamos?</h3>
+<p>Para crear y gestionar tu cuenta, mostrar tu perfil y tu actividad en el foro, permitir el funcionamiento de las secciones, votos, respuestas y notificaciones, y para moderar el contenido cuando se reporta.</p>
+</div>
+
+<div class="hilo-card" style="cursor:default">
+<h3>Base legal</h3>
+<p>El tratamiento se basa en tu consentimiento al registrarte y en la ejecución del servicio que nos pides (tener una cuenta y participar en el foro).</p>
+</div>
+
+<div class="hilo-card" style="cursor:default">
+<h3>¿Con quién compartimos tus datos?</h3>
+<p>Los datos se almacenan en Firebase (Google LLC), que actúa como encargado del tratamiento y aplica sus propias medidas de seguridad. No vendemos ni cedemos tus datos a terceros con fines publicitarios.</p>
+</div>
+
+<div class="hilo-card" style="cursor:default">
+<h3>¿Cuánto tiempo los conservamos?</h3>
+<p>Mientras tu cuenta exista. Si la eliminas desde Configuración, se borran también tus hilos y respuestas, tal como se describe en esa sección.</p>
+</div>
+
+<div class="hilo-card" style="cursor:default">
+<h3>Tus derechos</h3>
+<p>Puedes acceder, rectificar y eliminar tus datos en cualquier momento desde tu propia cuenta (⚙️ Configuración), o escribiéndonos a siegfriedwebia@gmail.com para ejercer tus derechos de acceso, rectificación, supresión, portabilidad, oposición o limitación.</p>
+</div>
+
+<div class="hilo-card" style="cursor:default">
+<h3>Menores de edad</h3>
+<p>MiMegaForo no está dirigido a menores de edad. Si detectamos una cuenta de una persona menor de edad, podrá ser eliminada.</p>
+</div>
+
+<div class="hilo-card" style="cursor:default">
+<h3>Cookies</h3>
+<p>Consulta nuestra <a href="#" onclick="abrirCookies();return false;">Política de cookies</a> para saber qué almacenamos en tu navegador.</p>
+</div>
+
+`);
+
+};
+
+window.abrirCookies=function(){
+
+abrirPaginaLegal("🍪 Política de cookies",`
+
+<div class="hilo-card" style="cursor:default">
+<h3>¿Qué son las cookies?</h3>
+<p>Son pequeños archivos que un sitio web guarda en tu navegador para recordar información entre visitas. Aquí también usamos tecnologías similares, como el almacenamiento local del navegador (localStorage).</p>
+</div>
+
+<div class="hilo-card" style="cursor:default">
+<h3>¿Qué usamos actualmente?</h3>
+<p><strong>Solo almacenamiento esencial:</strong></p>
+<p>• Tu sesión de inicio de sesión (gestionada por Firebase Authentication), necesaria para que el foro sepa que has iniciado sesión.<br>
+• Tu elección sobre este mismo aviso de cookies, para no volver a preguntarte.</p>
+<p>Ahora mismo <strong>no usamos cookies de analítica ni de publicidad</strong>. Si en el futuro se añaden (por ejemplo, Google Analytics o Google AdSense), se listarán aquí y se te volverá a pedir tu consentimiento.</p>
+</div>
+
+<div class="hilo-card" style="cursor:default">
+<h3>Gestionar tu elección</h3>
+<p>Puedes cambiar tu elección en cualquier momento desde el enlace "Gestionar cookies" al final de la página.</p>
+<button class="boton-secundario" style="width:auto" type="button" onclick="mostrarBannerCookies()">Revisar mi elección de cookies</button>
+</div>
+
+<div class="hilo-card" style="cursor:default">
+<h3>Cómo desactivar cookies desde tu navegador</h3>
+<p>También puedes borrar o bloquear el almacenamiento local desde la configuración de tu navegador, aunque esto puede hacer que tengas que iniciar sesión más a menudo.</p>
+</div>
+
+`);
+
+};
+
+window.abrirContacto=function(){
+
+abrirPaginaLegal("✉️ Contacto",`
+
+<div class="hilo-card" style="cursor:default">
+<h3>¿Necesitas escribirnos?</h3>
+<p>Para dudas, sugerencias, solicitudes sobre tus datos personales, o para reportar un problema que no puedas resolver con el botón 🚩 Reportar, escríbenos a:</p>
+<p style="font-size:1.2rem"><strong>siegfriedwebia@gmail.com</strong></p>
+</div>
+
+<div class="hilo-card" style="cursor:default">
+<h3>Reportar contenido</h3>
+<p>Si quieres reportar un hilo o una respuesta concretos, usa el botón 🚩 Reportar que aparece junto al contenido — así llega directamente al equipo de moderación.</p>
+</div>
+
+`);
+
+};
+
+window.reportarContenido=async function(tipo,hiloId,respuestaId){
+  if(!usuarioLogueado){
+    alert("Debes iniciar sesión para reportar contenido.");
+    return;
+  }
+
+  const motivo=prompt("¿Por qué reportas este contenido? (spam, insultos, contenido ilegal...)");
+
+  if(motivo===null) return;
+
+  if(!motivo.trim()){
+    alert("Debes indicar un motivo.");
+    return;
+  }
+
+  try{
+    await db.collection("reportes").add({
+      tipo:tipo,
+      hiloId:hiloId,
+      respuestaId:respuestaId||null,
+      motivo:motivo.trim().slice(0,500),
+      reportadoPorUid:usuarioLogueado.uid,
+      estado:"pendiente",
+      fecha:firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    alert("Gracias. El reporte se ha enviado a los moderadores.");
+  }catch(error){
+    console.error(error);
+    alert("No se ha podido enviar el reporte.");
+  }
+};
+
+window.recalcularContadores=async function(){
+
+if(!esAdmin) return;
+
+if(!confirm("Esto recorrerá todos los hilos y recalculará su número de respuestas. En un foro grande puede tardar un poco. ¿Continuar?")) return;
+
+try{
+
+const todos=await db.collection("hilos").get();
+
+for(const hiloDoc of todos.docs){
+const respuestas=await hiloDoc.ref.collection("respuestas").get();
+await hiloDoc.ref.update({numRespuestas:respuestas.size});
+}
+
+alert("Contadores actualizados en "+todos.size+" hilos.");
+
+}catch(error){
+console.error(error);
+alert("No se han podido recalcular los contadores.");
+}
+
+};
+
+window.abrirPanelModeracion=async function(){
+  if(!esAdmin){
+    alert("Solo los administradores pueden acceder al panel de moderación.");
+    return;
+  }
+
+  seccionActual=null;
+
+  document.getElementById("foro-content").innerHTML=`
+    <button class="boton-volver" onclick="volverSeccion()">← Volver</button>
+    <h2>🛡️ Panel de moderación</h2>
+    <button class="boton-secundario" style="width:auto" onclick="recalcularContadores()">🔧 Recalcular contadores de respuestas</button>
+    <h3 style="margin-top:20px">Reportes pendientes</h3>
+    <div id="lista-reportes">Cargando reportes...</div>
+    <div style="margin-top:22px;padding-top:18px;border-top:1px solid var(--border)">
+      <h3>👥 Gestión de usuarios</h3>
+      <button class="boton-secundario" style="width:auto" type="button" onclick="abrirGestionUsuarios()">Cargar usuarios</button>
+      <div id="gestion-usuarios" style="margin-top:12px"></div>
+    </div>
+  `;
+
+  try{
+    const snapshot=await db.collection("reportes").where("estado","==","pendiente").get();
+
+    const lista=document.getElementById("lista-reportes");
+
+    if(snapshot.empty){
+      lista.innerHTML=`<p style="color:var(--text-muted)">No hay reportes pendientes. 🎉</p>`;
+      return;
+    }
+
+    lista.innerHTML="";
+
+    snapshot.forEach(doc=>{
+      const r=doc.data();
+      const tarjeta=document.createElement("div");
+      tarjeta.className="hilo-card";
+      tarjeta.innerHTML=`
+        <h3>Reporte de ${escapeHTML(r.tipo==="hilo"?"un hilo":"una respuesta")}</h3>
+        <p><strong>Motivo:</strong> ${escapeHTML(r.motivo||"")}</p>
+        <div class="hilo-meta">Hilo: ${escapeHTML(r.hiloId||"")}${r.respuestaId?" · Respuesta: "+escapeHTML(r.respuestaId):""}</div>
+        <div class="gestion-hilo">
+          <button class="btn-editar-hilo" type="button" onclick="abrirHilo('${r.hiloId}')">👁️ Ver contenido</button>
+          <button class="btn-editar-hilo" type="button" onclick="resolverReporte('${doc.id}')">✅ Marcar resuelto</button>
+          ${r.tipo==="hilo"
+            ? `<button class="btn-borrar-hilo" type="button" onclick="moderarBorrarHilo('${doc.id}','${r.hiloId}')">🗑️ Borrar hilo</button>`
+            : `<button class="btn-borrar-hilo" type="button" onclick="moderarBorrarRespuesta('${doc.id}','${r.hiloId}','${r.respuestaId}')">🗑️ Borrar respuesta</button>`}
+        </div>
+      `;
+      lista.appendChild(tarjeta);
+    });
+
+  }catch(error){
+    console.error(error);
+    document.getElementById("lista-reportes").innerHTML=`<p class="error-texto">No se han podido cargar los reportes.</p>`;
+  }
+};
+
+window.abrirGestionUsuarios=async function(){
+if(!esAdmin){
+alert("Solo los administradores pueden gestionar usuarios.");
+return;
+}
+
+const cont=document.getElementById("gestion-usuarios");
+if(!cont) return;
+cont.innerHTML="Cargando usuarios...";
+
+try{
+const snapshot=await db.collection("usuarios").get();
+const usuarios=[...snapshot.docs].sort((a,b)=>{
+const da=a.data(),db_=b.data();
+const fa=da.fechaRegistro?.toDate?da.fechaRegistro.toDate().getTime():0;
+const fb=db_.fechaRegistro?.toDate?db_.fechaRegistro.toDate().getTime():0;
+return fb-fa;
+});
+
+cont.innerHTML="";
+
+usuarios.forEach(doc=>{
+const u=doc.data();
+if(u.esAdmin===true) return;
+
+const card=document.createElement("div");
+card.className="hilo-card usuario-admin-card";
+
+let estadoHtml='<span class="estado-usuario">Activo</span>';
+if(u.bloqueado===true){
+estadoHtml='<span class="estado-usuario bloqueado">Bloqueado</span>';
+}else if(u.suspendidoHasta?.toMillis && u.suspendidoHasta.toMillis()>Date.now()){
+estadoHtml='<span class="estado-usuario suspendido">Suspendido hasta '+escapeHTML(u.suspendidoHasta.toDate().toLocaleString("es-ES"))+'</span>';
+}
+
+card.innerHTML=`
+<div>
+<strong>${escapeHTML(u.username||"Usuario")}</strong>${estadoHtml}
+<div class="hilo-meta">${escapeHTML(u.email||"")}</div>
+</div>
+<div class="usuario-admin-acciones">
+<button class="btn-editar-hilo" type="button" onclick="cambiarEstadoUsuario('${doc.id}','suspender24')">⏱️ 24 h</button>
+<button class="btn-editar-hilo" type="button" onclick="cambiarEstadoUsuario('${doc.id}','suspender7')">📅 7 días</button>
+<button class="btn-editar-hilo" type="button" onclick="cambiarEstadoUsuario('${doc.id}','reactivar')">✅ Reactivar</button>
+<button class="btn-borrar-hilo" type="button" onclick="cambiarEstadoUsuario('${doc.id}',${u.bloqueado===true?"'desbloquear'":"'bloquear'"})">${u.bloqueado===true?"🔓 Desbloquear":"🚫 Bloquear"}</button>
+</div>
+`;
+cont.appendChild(card);
+});
+}catch(error){
+console.error(error);
+cont.innerHTML=`<p class="error-texto">No se han podido cargar los usuarios.</p>`;
+}
+};
+
+window.cambiarEstadoUsuario=async function(uid,accion){
+if(!esAdmin) return;
+
+if(uid===usuarioLogueado?.uid){
+alert("No puedes modificar tu propia cuenta desde aquí.");
+return;
+}
+
+try{
+const ref=db.collection("usuarios").doc(uid);
+const doc=await ref.get();
+
+if(!doc.exists){
+alert("El usuario ya no existe.");
+return;
+}
+
+if(doc.data().esAdmin===true){
+alert("No se puede modificar una cuenta de administrador desde aquí.");
+return;
+}
+
+let cambios={};
+
+if(accion==="suspender24"){
+cambios={suspendidoHasta:firebase.firestore.Timestamp.fromDate(new Date(Date.now()+24*60*60*1000)),bloqueado:false};
+}
+if(accion==="suspender7"){
+cambios={suspendidoHasta:firebase.firestore.Timestamp.fromDate(new Date(Date.now()+7*24*60*60*1000)),bloqueado:false};
+}
+if(accion==="reactivar"){
+cambios={suspendidoHasta:null,bloqueado:false};
+}
+if(accion==="bloquear"){
+cambios={bloqueado:true};
+}
+if(accion==="desbloquear"){
+cambios={bloqueado:false,suspendidoHasta:null};
+}
+
+await ref.update(cambios);
+await abrirGestionUsuarios();
+
+}catch(error){
+console.error(error);
+alert("No se ha podido actualizar el estado del usuario.");
+}
+};
+
+window.resolverReporte=async function(reporteId){
+  if(!esAdmin) return;
+  try{
+    await db.collection("reportes").doc(reporteId).update({estado:"resuelto"});
+    await abrirPanelModeracion();
+  }catch(error){
+    console.error(error);
+    alert("No se ha podido actualizar el reporte.");
+  }
+};
+
+window.moderarBorrarHilo=async function(reporteId,hiloId){
+  const listo=await borrarHilo(hiloId);
+  if(!listo) return;
+  try{
+    await db.collection("reportes").doc(reporteId).update({estado:"resuelto"});
+  }catch(error){
+    console.error(error);
+  }
+  await abrirPanelModeracion();
+};
+
+window.moderarBorrarRespuesta=async function(reporteId,hiloId,respuestaId){
+  const listo=await borrarRespuesta(hiloId,respuestaId);
+  if(!listo) return;
+  try{
+    await db.collection("reportes").doc(reporteId).update({estado:"resuelto"});
+  }catch(error){
+    console.error(error);
+  }
+  await abrirPanelModeracion();
+};
+
+function escapeHTML(texto){
+
+const div=document.createElement("div");
+
+div.textContent=texto;
+
+return div.innerHTML;
+
+}
+
+
+
+/* =========================
+   PERFILES Y GESTIÓN DE HILOS
+   ========================= */
+
+function usuarioActualUid(){
+  return auth.currentUser ? auth.currentUser.uid : null;
+}
+
+async function comprobarPropietarioHilo(hiloId){
+  if(!auth.currentUser) return null;
+  const doc = await db.collection("hilos").doc(hiloId).get();
+  if(!doc.exists) return null;
+  const datos = doc.data();
+  if(datos.autorUid !== auth.currentUser.uid) return null;
+  return datos;
+}
+
+function abrirModalEditar(hiloId, titulo, contenido){
+  document.getElementById("editar-hilo-id").value = hiloId;
+  document.getElementById("editar-hilo-titulo").value = titulo || "";
+  document.getElementById("editar-hilo-contenido").value = contenido || "";
+  document.getElementById("modal-editar-hilo").classList.add("activo");
+}
+
+function cerrarModalEditar(event){
+  if(event && event.target !== event.currentTarget) return;
+  document.getElementById("modal-editar-hilo").classList.remove("activo");
+}
+
+async function editarHilo(hiloId){
+  if(!auth.currentUser){
+    alert("Debes iniciar sesión para editar un hilo.");
+    return;
+  }
+
+  try{
+    const datos = await comprobarPropietarioHilo(hiloId);
+
+    if(!datos){
+      alert("Solo puedes editar tus propios hilos.");
+      return;
+    }
+
+    abrirModalEditar(hiloId, datos.titulo, datos.contenido);
+  }catch(error){
+    console.error(error);
+    alert("No se ha podido abrir el hilo para editarlo.");
+  }
+}
+
+async function guardarEdicionHilo(){
+  const hiloId = document.getElementById("editar-hilo-id").value;
+  const titulo = document.getElementById("editar-hilo-titulo").value.trim();
+  const contenido = document.getElementById("editar-hilo-contenido").value.trim();
+
+  if(!titulo || !contenido){
+    alert("El título y el contenido son obligatorios.");
+    return;
+  }
+
+  if(!auth.currentUser){
+    alert("Debes iniciar sesión.");
+    return;
+  }
+
+  try{
+    const datos = await comprobarPropietarioHilo(hiloId);
+
+    if(!datos){
+      alert("Solo puedes editar tus propios hilos.");
+      return;
+    }
+
+    await db.collection("hilos").doc(hiloId).update({
+      titulo: titulo,
+      contenido: contenido,
+      fechaEdicion: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    cerrarModalEditar();
+    alert("Hilo actualizado correctamente.");
+
+    if(typeof abrirHilo === "function"){
+      abrirHilo(hiloId);
+    }
+    if(typeof cargarHilos === "function" && datos.seccion){
+      cargarHilos(datos.seccion);
+    }
+  }catch(error){
+    console.error(error);
+    alert("No se ha podido editar el hilo: " + (error.message || error.code));
+  }
+}
+
+async function borrarHilo(hiloId){
+  if(!auth.currentUser){
+    alert("Debes iniciar sesión para borrar un hilo.");
+    return false;
+  }
+
+  if(!confirm("¿Seguro que quieres borrar este hilo? Esta acción no se puede deshacer.")){
+    return false;
+  }
+
+  try{
+    const hiloRef = db.collection("hilos").doc(hiloId);
+    const hiloDoc = await hiloRef.get();
+
+    if(!hiloDoc.exists){
+      alert("El hilo ya no existe (puede que ya lo borraras antes).");
+      return true;
+    }
+
+    const datos = hiloDoc.data();
+
+    if(datos.autorUid !== auth.currentUser.uid && !esAdmin){
+      alert("Solo puedes borrar tus propios hilos.");
+      return false;
+    }
+
+    // Borramos también las respuestas para no dejar datos huérfanos.
+    const respuestas = await db.collection("hilos").doc(hiloId)
+      .collection("respuestas").get();
+
+    const batch = db.batch();
+
+    respuestas.forEach(doc=>{
+      batch.delete(doc.ref);
+    });
+
+    batch.delete(db.collection("hilos").doc(hiloId));
+    await batch.commit();
+
+    alert("Hilo borrado correctamente.");
+
+    if(typeof volverSeccion === "function"){
+      volverSeccion();
+    }
+
+    if(typeof cargarHilos === "function" && datos.seccion){
+      cargarHilos(datos.seccion);
+    }
+
+    return true;
+  }catch(error){
+    console.error(error);
+    alert("No se ha podido borrar el hilo: " + (error.message || error.code));
+    return false;
+  }
+}
+
+
+function obtenerLogros(datosResumen){
+const hilos=datosResumen.hilos||0;
+const respuestas=datosResumen.respuestas||0;
+const likes=datosResumen.likes||0;
+const reacciones=(datosResumen.likes||0)+(datosResumen.dislikes||0);
+const visitas=datosResumen.visitas||0;
+const maxRespuestasHilo=datosResumen.maxRespuestasHilo||0;
+
+return [
+{icono:"🌱",nombre:"Primer paso",desc:"Has publicado tu primer contenido.",ok:(hilos+respuestas)>=1},
+{icono:"🧵",nombre:"Creador",desc:"Has creado 5 hilos.",ok:hilos>=5},
+{icono:"💬",nombre:"Conversador",desc:"Has escrito 10 respuestas.",ok:respuestas>=10},
+{icono:"🔥",nombre:"Muy activo",desc:"Has escrito 25 respuestas.",ok:respuestas>=25},
+{icono:"👍",nombre:"Bien valorado",desc:"Has recibido 25 likes.",ok:likes>=25},
+{icono:"🌟",nombre:"Popular",desc:"Has recibido 100 likes.",ok:likes>=100},
+{icono:"🏅",nombre:"De la comunidad",desc:"Has recibido 50 reacciones.",ok:reacciones>=50},
+{icono:"🚀",nombre:"Generador de debate",desc:"Uno de tus hilos tiene 25 respuestas.",ok:maxRespuestasHilo>=25},
+{icono:"👁️",nombre:"Alcance",desc:"Tus hilos han superado 100 visitas.",ok:visitas>=100}
+];
+}
+
+async function mostrarPerfil(uid){
+try{
+const usuarioDoc=await db.collection("usuarios").doc(uid).get();
+
+if(!usuarioDoc.exists){
+alert("No se ha encontrado el perfil.");
+return;
+}
+
+const usuario=usuarioDoc.data();
+const hilosSnap=await db.collection("hilos").where("autorUid","==",uid).get();
+
+let respuestasCount=0;
+let likesRecibidos=0;
+let dislikesRecibidos=0;
+let visitasGeneradas=0;
+let maxRespuestasHilo=0;
+const respuestasPromises=[];
+
+hilosSnap.forEach(doc=>{
+const d=doc.data();
+likesRecibidos+=Array.isArray(d.meGustaUids)?d.meGustaUids.length:0;
+dislikesRecibidos+=Array.isArray(d.noMeGustaUids)?d.noMeGustaUids.length:0;
+visitasGeneradas+=Number(d.visitas)||0;
+maxRespuestasHilo=Math.max(maxRespuestasHilo,Number(d.numRespuestas)||0);
+respuestasPromises.push(doc.ref.collection("respuestas").get());
+});
+
+const respuestasSnaps=await Promise.all(respuestasPromises);
+
+respuestasSnaps.forEach(snap=>{
+respuestasCount+=snap.size;
+snap.forEach(r=>{
+const d=r.data();
+likesRecibidos+=Array.isArray(d.meGustaUids)?d.meGustaUids.length:0;
+dislikesRecibidos+=Array.isArray(d.noMeGustaUids)?d.noMeGustaUids.length:0;
+});
+});
+
+const nombre=usuario.username||usuario.nombreUsuario||"Usuario";
+const inicial=nombre.charAt(0).toUpperCase();
+const reputacion=likesRecibidos-dislikesRecibidos;
+const registro=usuario.fechaRegistro?.toDate?usuario.fechaRegistro.toDate().toLocaleDateString("es-ES"):"Fecha no disponible";
+const logros=obtenerLogros({
+hilos:hilosSnap.size,
+respuestas:respuestasCount,
+likes:likesRecibidos,
+dislikes:dislikesRecibidos,
+visitas:visitasGeneradas,
+maxRespuestasHilo:maxRespuestasHilo
+});
+const logrosConseguidos=logros.filter(l=>l.ok).length;
+
+const hilosRecientes=[...hilosSnap.docs].sort((a,b)=>{
+const fa=a.data().fecha?.toDate?a.data().fecha.toDate().getTime():0;
+const fb=b.data().fecha?.toDate?b.data().fecha.toDate().getTime():0;
+return fb-fa;
+}).slice(0,5);
+
+document.getElementById("foro-content").innerHTML=`
+<section class="perfil-usuario">
+<div class="perfil-cabecera">
+<div class="avatar-usuario">${escapeHTML(inicial)}</div>
+<div>
+<h2>${escapeHTML(nombre)}</h2>
+<p>Miembro desde ${escapeHTML(registro)}</p>
+</div>
+</div>
+
+<div class="perfil-estadisticas">
+<div class="perfil-estadistica"><strong>${hilosSnap.size}</strong>Hilos</div>
+<div class="perfil-estadistica"><strong>${respuestasCount}</strong>Respuestas</div>
+<div class="perfil-estadistica"><strong>${reputacion}</strong>Reputación</div>
+<div class="perfil-estadistica"><strong>${logrosConseguidos}</strong>Logros</div>
+</div>
+
+<div class="hilo-card" style="margin-top:1rem">
+<h3>⭐ Reacciones recibidas</h3>
+<p>👍 ${likesRecibidos} likes · 👎 ${dislikesRecibidos} dislikes</p>
+</div>
+
+<div class="hilo-card" style="margin-top:1rem">
+<h3>🏆 Logros</h3>
+<p class="logros-resumen">${logrosConseguidos} de ${logros.length} logros conseguidos</p>
+<div class="logros-grid">
+${logros.map(l=>`
+<div class="logro-card ${l.ok?"conseguido":""}">
+<div class="logro-icono">${l.ok?l.icono:"🔒"}</div>
+<div>
+<strong>${escapeHTML(l.nombre)}</strong>
+<small>${escapeHTML(l.desc)}</small>
+</div>
+</div>
+`).join("")}
+</div>
+</div>
+
+<div class="hilo-card" style="margin-top:1rem">
+<h3>📊 Actividad</h3>
+<p>👁️ ${visitasGeneradas} visitas en tus hilos · 👍 ${likesRecibidos} likes recibidos · 👎 ${dislikesRecibidos} dislikes recibidos</p>
+</div>
+
+<div class="hilo-card" style="margin-top:1rem">
+<h3>🧵 Últimos hilos</h3>
+<div id="perfil-hilos-recientes"></div>
+</div>
+
+<button type="button" onclick="volverSeccion()">Volver al foro</button>
+</section>
+`;
+
+const lista=document.getElementById("perfil-hilos-recientes");
+if(hilosRecientes.length===0){
+lista.innerHTML=`<p class="ayuda-texto">Este usuario todavía no ha creado hilos.</p>`;
+}else{
+hilosRecientes.forEach(doc=>{
+const boton=document.createElement("button");
+boton.type="button";
+boton.className="boton-secundario";
+boton.style.textAlign="left";
+boton.innerText=doc.data().titulo||"Hilo sin título";
+boton.onclick=function(){abrirHilo(doc.id);};
+lista.appendChild(boton);
+});
+}
+}catch(error){
+console.error(error);
+alert("No se ha podido cargar el perfil.");
+}
+}
+
+function mostrarMensajeConfig(texto,tipo){
+  const mensaje=document.getElementById("mensaje-config");
+  if(!texto){ mensaje.className="mensaje"; mensaje.innerText=""; return; }
+  mensaje.innerText=texto;
+  mensaje.className="mensaje "+tipo;
+}
+
+function abrirConfiguracion(){
+  if(!auth.currentUser){
+    alert("Debes iniciar sesión.");
+    return;
+  }
+  document.getElementById("config-pass-actual").value="";
+  document.getElementById("config-pass-nueva").value="";
+  document.getElementById("config-pass-repite").value="";
+  document.getElementById("config-eliminar-pass").value="";
+  mostrarMensajeConfig("","");
+  db.collection("usuarios").doc(auth.currentUser.uid).get().then(doc=>{
+    document.getElementById("config-nuevo-username").value = doc.exists ? (doc.data().username || "") : "";
+  });
+  document.getElementById("modal-configuracion").classList.add("activo");
+}
+
+function cerrarConfiguracion(event){
+  if(event && event.target !== event.currentTarget) return;
+  document.getElementById("modal-configuracion").classList.remove("activo");
+}
+
+window.guardarNombreUsuario=async function(){
+  if(!auth.currentUser){ mostrarMensajeConfig("Debes iniciar sesión.","error"); return; }
+
+  const nuevo=document.getElementById("config-nuevo-username").value.trim().toLowerCase();
+
+  if(!/^[a-z0-9_]{3,20}$/.test(nuevo)){
+    mostrarMensajeConfig("El nombre de usuario no es válido. Solo letras minúsculas, números y _.","error");
+    return;
+  }
+
+  try{
+    const existente=await db.collection("usuarios").where("username","==",nuevo).limit(1).get();
+
+    if(!existente.empty && existente.docs[0].id !== auth.currentUser.uid){
+      mostrarMensajeConfig("Ese nombre de usuario ya está ocupado.","error");
+      return;
+    }
+
+    await db.collection("usuarios").doc(auth.currentUser.uid).update({username:nuevo});
+    document.getElementById("usuario-header").innerText="👤 "+nuevo;
+    mostrarMensajeConfig("Nombre de usuario actualizado.","exito");
+  }catch(error){
+    console.error(error);
+    mostrarMensajeConfig("No se ha podido actualizar el nombre de usuario.","error");
+  }
+};
+
+window.cambiarContrasenaUsuario=async function(){
+  if(!auth.currentUser){ mostrarMensajeConfig("Debes iniciar sesión.","error"); return; }
+
+  const actual=document.getElementById("config-pass-actual").value;
+  const nueva=document.getElementById("config-pass-nueva").value;
+  const repite=document.getElementById("config-pass-repite").value;
+
+  if(!actual || !nueva || !repite){
+    mostrarMensajeConfig("Rellena los tres campos de contraseña.","error");
+    return;
+  }
+  if(nueva.length<6){
+    mostrarMensajeConfig("La nueva contraseña debe tener al menos 6 caracteres.","error");
+    return;
+  }
+  if(nueva!==repite){
+    mostrarMensajeConfig("Las contraseñas nuevas no coinciden.","error");
+    return;
+  }
+
+  try{
+    const credencial=firebase.auth.EmailAuthProvider.credential(auth.currentUser.email,actual);
+    await auth.currentUser.reauthenticateWithCredential(credencial);
+    await auth.currentUser.updatePassword(nueva);
+
+    document.getElementById("config-pass-actual").value="";
+    document.getElementById("config-pass-nueva").value="";
+    document.getElementById("config-pass-repite").value="";
+    mostrarMensajeConfig("Contraseña actualizada correctamente.","exito");
+  }catch(error){
+    console.error(error);
+    let mensaje="No se ha podido cambiar la contraseña.";
+    if(error.code==="auth/wrong-password" || error.code==="auth/invalid-credential"){
+      mensaje="La contraseña actual no es correcta.";
+    }
+    if(error.code==="auth/weak-password"){
+      mensaje="La nueva contraseña es demasiado débil.";
+    }
+    if(error.code==="auth/requires-recent-login"){
+      mensaje="Por seguridad, cierra sesión, vuelve a entrar e inténtalo de nuevo.";
+    }
+    mostrarMensajeConfig(mensaje,"error");
+  }
+};
+
+async function borrarContenidoDeUsuario(uid){
+
+  // 1) Borrar los hilos del usuario junto con todas sus respuestas.
+  const misHilos=await db.collection("hilos").where("autorUid","==",uid).get();
+
+  for(const hiloDoc of misHilos.docs){
+    const respuestas=await hiloDoc.ref.collection("respuestas").get();
+    const batch=db.batch();
+    respuestas.forEach(r=>batch.delete(r.ref));
+    batch.delete(hiloDoc.ref);
+    await batch.commit();
+  }
+
+  // 2) Borrar sus respuestas en hilos de otras personas.
+  const idsPropios=new Set(misHilos.docs.map(d=>d.id));
+  const todosLosHilos=await db.collection("hilos").get();
+
+  for(const hiloDoc of todosLosHilos.docs){
+    if(idsPropios.has(hiloDoc.id)) continue;
+
+    const misRespuestas=await hiloDoc.ref.collection("respuestas")
+      .where("autorUid","==",uid).get();
+
+    if(misRespuestas.empty) continue;
+
+    const batch=db.batch();
+    misRespuestas.forEach(r=>batch.delete(r.ref));
+    await batch.commit();
+
+    await hiloDoc.ref.update({
+      numRespuestas:firebase.firestore.FieldValue.increment(-misRespuestas.size)
+    });
+  }
+
+}
+
+window.eliminarCuenta=async function(){
+  if(!auth.currentUser){ mostrarMensajeConfig("Debes iniciar sesión.","error"); return; }
+
+  const pass=document.getElementById("config-eliminar-pass").value;
+
+  if(!pass){
+    mostrarMensajeConfig("Escribe tu contraseña para confirmar.","error");
+    return;
+  }
+  if(!confirm("¿Seguro que quieres eliminar tu cuenta? Se borrarán también todos tus hilos y respuestas. Esta acción no se puede deshacer.")){
+    return;
+  }
+
+  try{
+    const credencial=firebase.auth.EmailAuthProvider.credential(auth.currentUser.email,pass);
+    await auth.currentUser.reauthenticateWithCredential(credencial);
+
+    const uid=auth.currentUser.uid;
+
+    mostrarMensajeConfig("Borrando tu contenido, espera un momento...","exito");
+
+    await borrarContenidoDeUsuario(uid);
+
+    await db.collection("usuarios").doc(uid).delete();
+    await auth.currentUser.delete();
+
+    alert("Tu cuenta y todo tu contenido se han eliminado.");
+mostrarInicio();
+  }catch(error){
+    console.error(error);
+    let mensaje="No se ha podido eliminar la cuenta.";
+    if(error.code==="auth/wrong-password" || error.code==="auth/invalid-credential"){
+      mensaje="La contraseña no es correcta.";
+    }
+    if(error.code==="auth/requires-recent-login"){
+      mensaje="Por seguridad, cierra sesión, vuelve a entrar e inténtalo de nuevo.";
+    }
+    mostrarMensajeConfig(mensaje,"error");
+  }
+};
+
+function iniciarRouterForo(){
+const params=new URLSearchParams(window.location.search);
+const hiloId=params.get("hilo");
+const seccion=params.get("seccion");
+const busqueda=params.get("buscar");
+
+if(hiloId){
+abrirHilo(hiloId);
+}else if(seccion && descripcionesSeccion[seccion]){
+cargarSeccion(seccion);
+}else if(busqueda){
+document.getElementById("buscar-input").value=busqueda;
+buscarHilos(null);
+}else{
+mostrarInicio();
+}
+}
+
+if(document.readyState==="loading"){
+document.addEventListener("DOMContentLoaded",iniciarRouterForo);
+}else{
+iniciarRouterForo();
+}
+</script>
+
+
+<!-- Modal para editar un hilo -->
+<div id="modal-editar-hilo" class="modal-editar" onclick="cerrarModalEditar(event)">
+  <div class="modal-editar-contenido" onclick="event.stopPropagation()">
+    <h2>Editar hilo</h2>
+    <input type="hidden" id="editar-hilo-id">
+    <label for="editar-hilo-titulo">Título</label>
+    <input id="editar-hilo-titulo" type="text" maxlength="150">
+    <label for="editar-hilo-contenido">Contenido</label>
+    <textarea id="editar-hilo-contenido" maxlength="10000"></textarea>
+    <div class="acciones-modal">
+      <button type="button" onclick="cerrarModalEditar()">Cancelar</button>
+      <button type="button" onclick="guardarEdicionHilo()">Guardar cambios</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de configuración de cuenta -->
+<div id="modal-configuracion" class="modal-editar" onclick="cerrarConfiguracion(event)">
+  <div class="modal-editar-contenido" onclick="event.stopPropagation()">
+    <h2>⚙️ Configuración de cuenta</h2>
+    <div id="mensaje-config" class="mensaje"></div>
+
+    <h3>Nombre de usuario</h3>
+    <label for="config-nuevo-username">Nombre de usuario</label>
+    <input id="config-nuevo-username" type="text" minlength="3" maxlength="20">
+    <div class="acciones-modal">
+      <button type="button" onclick="guardarNombreUsuario()">Guardar nombre</button>
+    </div>
+
+    <h3>Cambiar contraseña</h3>
+    <label for="config-pass-actual">Contraseña actual</label>
+    <input id="config-pass-actual" type="password">
+    <label for="config-pass-nueva">Nueva contraseña</label>
+    <input id="config-pass-nueva" type="password" minlength="6">
+    <label for="config-pass-repite">Repite la nueva contraseña</label>
+    <input id="config-pass-repite" type="password" minlength="6">
+    <div class="acciones-modal">
+      <button type="button" onclick="cambiarContrasenaUsuario()">Cambiar contraseña</button>
+    </div>
+
+    <h3 class="config-zona-peligrosa">Zona peligrosa</h3>
+    <label for="config-eliminar-pass">Escribe tu contraseña para eliminar tu cuenta</label>
+    <input id="config-eliminar-pass" type="password">
+    <div class="acciones-modal">
+      <button type="button" class="boton-danger" onclick="eliminarCuenta()">Eliminar cuenta</button>
+    </div>
+
+    <div class="acciones-modal" style="margin-top:18px">
+      <button type="button" class="boton-secundario" onclick="cerrarConfiguracion()">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<footer id="pie-pagina">
+  <div class="footer-links">
+    <a href="#" onclick="abrirNormas();return false;">Normas del foro</a>
+    <a href="#" onclick="abrirAvisoLegal();return false;">Aviso legal</a>
+    <a href="#" onclick="abrirPrivacidad();return false;">Privacidad</a>
+    <a href="#" onclick="abrirCookies();return false;">Cookies</a>
+    <a href="#" onclick="abrirContacto();return false;">Contacto</a>
+    <a href="#" onclick="mostrarBannerCookies();return false;">Gestionar cookies</a>
+  </div>
+  <p>© <span id="anio-actual"></span> MiMegaForo. Todos los derechos reservados.</p>
+</footer>
+
+<div id="banner-cookies" class="banner-cookies">
+  <p>
+    Usamos almacenamiento local necesario para que funcione el inicio de sesión.
+    Más información en nuestra <a href="#" onclick="abrirCookies();return false;">Política de cookies</a>.
+  </p>
+  <div class="banner-cookies-botones">
+    <button type="button" class="boton-secundario" onclick="responderConsentimientoCookies('esenciales')">Solo esenciales</button>
+    <button type="button" onclick="responderConsentimientoCookies('todas')">Aceptar todo</button>
+  </div>
+</div>
+
+
+</body>
+</html>
