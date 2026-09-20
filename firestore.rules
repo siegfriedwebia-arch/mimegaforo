@@ -1,0 +1,484 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ================================================================
+    // MiMegaForo — reglas de seguridad endurecidas
+    //
+    // Estas reglas están pensadas para el código actual de MiMegaForo.
+    // No usan Firebase Storage ni requieren Cloud Functions.
+    // ================================================================
+
+    function estaLogueado() {
+      return request.auth != null;
+    }
+
+    function correoVerificado() {
+      return estaLogueado()
+        && request.auth.token.email_verified == true;
+    }
+
+    function esAutor(datos) {
+      return estaLogueado()
+        && datos.autorUid == request.auth.uid;
+    }
+
+    function esAdmin() {
+      return estaLogueado()
+        && exists(/databases/$(database)/documents/usuarios/$(request.auth.uid))
+        && get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.get('esAdmin', false) == true;
+    }
+
+    // Una cuenta bloqueada o suspendida no puede crear contenido,
+    // votar, reportar ni generar notificaciones.
+    function cuentaActiva() {
+      return estaLogueado()
+        && exists(/databases/$(database)/documents/usuarios/$(request.auth.uid))
+        && get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.get('bloqueado', false) == false
+        && (
+          get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.get('suspendidoHasta', null) == null
+          || get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.get('suspendidoHasta', null) <= request.time
+        );
+    }
+
+    function seccionValida(seccion) {
+      return seccion in [
+        'General', 'Política', 'Deportes', 'Famosos', 'Economía',
+        'Música', 'Cine', 'Videojuegos', 'Informática', 'Cocina',
+        'Fitness', 'Fotografía', 'Memes'
+      ];
+    }
+
+    // ----------------------------------------------------------------
+    // VOTOS
+    //
+    // El código actual guarda los UID de los votantes en dos listas.
+    // Estas reglas impiden que un usuario:
+    //   - meta/quíte UID de otras personas,
+    //   - cambie votos ajenos,
+    //   - se ponga a sí mismo en "me gusta" y "no me gusta" a la vez,
+    //   - introduzca duplicados,
+    //   - sustituya una lista completa por otra.
+    // ----------------------------------------------------------------
+
+    function listasDeVotosValidas(datos) {
+      return datos.get('meGustaUids', []) is list
+        && datos.get('noMeGustaUids', []) is list
+        && datos.get('meGustaUids', []).size() <= 10000
+        && datos.get('noMeGustaUids', []).size() <= 10000
+        && datos.get('meGustaUids', []).toSet().size() == datos.get('meGustaUids', []).size()
+        && datos.get('noMeGustaUids', []).toSet().size() == datos.get('noMeGustaUids', []).size()
+        && datos.get('meGustaUids', []).toSet().intersection(
+             datos.get('noMeGustaUids', []).toSet()
+           ).size() == 0;
+    }
+
+    function cambioSoloMiVoto() {
+      return request.resource.data.get('meGustaUids', []).toSet().difference(
+               [request.auth.uid].toSet()
+             )
+          == resource.data.get('meGustaUids', []).toSet().difference(
+               [request.auth.uid].toSet()
+             )
+        && request.resource.data.get('noMeGustaUids', []).toSet().difference(
+               [request.auth.uid].toSet()
+             )
+          == resource.data.get('noMeGustaUids', []).toSet().difference(
+               [request.auth.uid].toSet()
+             )
+        && (
+          ((request.auth.uid in request.resource.data.get('meGustaUids', []))
+            != (request.auth.uid in resource.data.get('meGustaUids', [])))
+          ||
+          ((request.auth.uid in request.resource.data.get('noMeGustaUids', []))
+            != (request.auth.uid in resource.data.get('noMeGustaUids', [])))
+        )
+        && !(
+          request.auth.uid in request.resource.data.get('meGustaUids', [])
+          && request.auth.uid in request.resource.data.get('noMeGustaUids', [])
+        );
+    }
+
+    // ----------------------------------------------------------------
+    // CONTADOR DE RESPUESTAS
+    //
+    // El cliente actualiza el contador en una escritura separada de
+    // la respuesta. No podemos demostrar desde una regla simple que
+    // ambas operaciones ocurrieron juntas, así que limitamos el cambio
+    // a exactamente +1 o -1 y prohibimos valores negativos.
+    //
+    // Para una seguridad todavía más fuerte, en una siguiente fase
+    // podemos pasar creación/borrado + contador a una transacción con
+    // getAfter().
+    // ----------------------------------------------------------------
+
+    function cambioValidoContadorRespuestas() {
+      return request.resource.data.diff(resource.data).affectedKeys()
+          .hasOnly(['numRespuestas', 'ultimaActividad'])
+        && request.resource.data.numRespuestas is int
+        && resource.data.get('numRespuestas', 0) is int
+        && request.resource.data.numRespuestas >= 0
+        && (
+          request.resource.data.numRespuestas
+            == resource.data.get('numRespuestas', 0) + 1
+          ||
+          request.resource.data.numRespuestas
+            == resource.data.get('numRespuestas', 0) - 1
+        )
+        && (
+          !request.resource.data.diff(resource.data).affectedKeys().hasAny(['ultimaActividad'])
+          || request.resource.data.ultimaActividad == request.time
+        );
+    }
+
+    // =================================================================
+    // USUARIOS
+    // =================================================================
+
+    match /usuarios/{uid} {
+
+      // Mantiene los perfiles actuales funcionando.
+      // ATENCIÓN: Firestore no permite ocultar campos de un documento
+      // según quién lo lea. Por eso el email de este documento sigue
+      // siendo visible mientras esta lectura sea pública.
+      allow read: if true;
+
+      // Un usuario solo crea SU documento y no puede autoconcederse
+      // esAdmin ni añadir campos arbitrarios.
+      allow create: if estaLogueado()
+        && request.auth.uid == uid
+        && request.resource.data.keys().hasAll([
+          'username', 'email', 'uid', 'aceptoNormas',
+          'fechaRegistro', 'favoritosHiloIds'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'username', 'email', 'uid', 'aceptoNormas',
+          'fechaRegistro', 'favoritosHiloIds'
+        ])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.email == request.auth.token.email
+        && request.resource.data.username is string
+        && request.resource.data.username.size() >= 3
+        && request.resource.data.username.size() <= 20
+        && request.resource.data.aceptoNormas == true
+        && request.resource.data.fechaRegistro == request.time
+        && request.resource.data.favoritosHiloIds is list
+        && request.resource.data.favoritosHiloIds.size() <= 200;
+
+      // El usuario normal solo puede modificar username y favoritos.
+      // No puede tocar uid, email, fechaRegistro, aceptoNormas ni esAdmin.
+      allow update: if
+        (
+          estaLogueado()
+          && request.auth.uid == uid
+          && correoVerificado()
+          && cuentaActiva()
+          && request.resource.data.diff(resource.data).affectedKeys()
+              .hasOnly(['username', 'favoritosHiloIds'])
+          && request.resource.data.username is string
+          && request.resource.data.username.size() >= 3
+          && request.resource.data.username.size() <= 20
+          && request.resource.data.favoritosHiloIds is list
+          && request.resource.data.favoritosHiloIds.size() <= 200
+          && request.resource.data.uid == resource.data.uid
+          && request.resource.data.email == resource.data.email
+          // FIX: antes se comparaba request.resource.data.esAdmin (acceso directo,
+          // que falla si el campo no existe) con resource.data.get('esAdmin', false).
+          // Como ningún usuario normal tiene el campo esAdmin (create no lo permite),
+          // la condición fallaba siempre y bloqueaba la autoedición del perfil.
+          && request.resource.data.get('esAdmin', false) == resource.data.get('esAdmin', false)
+        )
+        ||
+        // Un administrador solo puede modificar el estado de un
+        // usuario NO administrador y no puede modificar su propia cuenta.
+        (
+          esAdmin()
+          && uid != request.auth.uid
+          && resource.data.get('esAdmin', false) != true
+          && request.resource.data.diff(resource.data).affectedKeys()
+              .hasOnly(['bloqueado', 'suspendidoHasta'])
+          && request.resource.data.bloqueado is bool
+          && (
+            request.resource.data.get('suspendidoHasta', null) == null
+            || request.resource.data.suspendidoHasta is timestamp
+          )
+        );
+
+      allow delete: if estaLogueado() && request.auth.uid == uid;
+    }
+
+    // =================================================================
+    // HILOS
+    // =================================================================
+
+    match /hilos/{hiloId} {
+
+      allow read: if true;
+
+      // Creación de hilo: solo usuario verificado y activo, firmando
+      // el contenido con su UID y nombre real almacenado en usuarios.
+      allow create: if correoVerificado()
+        && cuentaActiva()
+        && request.resource.data.keys().hasAll([
+          'titulo', 'contenido', 'autor', 'autorUid', 'seccion',
+          'fecha', 'ultimaActividad', 'fijado', 'cerrado'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'titulo', 'contenido', 'autor', 'autorUid', 'seccion',
+          'fecha', 'ultimaActividad', 'fijado', 'cerrado'
+        ])
+        && request.resource.data.autorUid == request.auth.uid
+        && request.resource.data.autor
+            == get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.username
+        && seccionValida(request.resource.data.seccion)
+        && request.resource.data.titulo is string
+        && request.resource.data.titulo.size() > 0
+        && request.resource.data.titulo.size() <= 150
+        && request.resource.data.contenido is string
+        && request.resource.data.contenido.size() > 0
+        && request.resource.data.contenido.size() <= 10000
+        && request.resource.data.fecha == request.time
+        && request.resource.data.ultimaActividad == request.time
+        && request.resource.data.fijado == false
+        && request.resource.data.cerrado == false;
+
+      allow update: if
+        // El autor solo puede editar título, contenido y fechaEdicion.
+        (
+          correoVerificado()
+          && cuentaActiva()
+          && esAutor(resource.data)
+          && request.resource.data.diff(resource.data).affectedKeys()
+              .hasOnly(['titulo', 'contenido', 'fechaEdicion'])
+          && request.resource.data.autorUid == resource.data.autorUid
+          && request.resource.data.titulo is string
+          && request.resource.data.titulo.size() > 0
+          && request.resource.data.titulo.size() <= 150
+          && request.resource.data.contenido is string
+          && request.resource.data.contenido.size() > 0
+          && request.resource.data.contenido.size() <= 10000
+          && request.resource.data.fechaEdicion == request.time
+        )
+        ||
+        // Un usuario verificado y activo solo puede modificar su propio
+        // voto en las dos listas.
+        (
+          correoVerificado()
+          && cuentaActiva()
+          && request.resource.data.diff(resource.data).affectedKeys()
+              .hasOnly(['meGustaUids', 'noMeGustaUids'])
+          && listasDeVotosValidas(resource.data)
+          && listasDeVotosValidas(request.resource.data)
+          && cambioSoloMiVoto()
+        )
+        ||
+        // Contador de respuestas: solo +1/-1, sin negativos.
+        (
+          correoVerificado()
+          && cambioValidoContadorRespuestas()
+        )
+        ||
+        // Visitas: solo +1 por escritura y nunca un valor arbitrario.
+        // El código puede intentar actualizarlo siendo visitante; la
+        // operación será rechazada y la apertura del hilo continuará.
+        (
+          correoVerificado()
+          && cuentaActiva()
+          && request.resource.data.diff(resource.data).affectedKeys()
+              .hasOnly(['visitas'])
+          && request.resource.data.visitas is int
+          && resource.data.get('visitas', 0) is int
+          && request.resource.data.visitas
+              == resource.data.get('visitas', 0) + 1
+        )
+        ||
+        // Moderación administrativa: cada acción toca solo su campo.
+        (
+          esAdmin()
+          && request.resource.data.diff(resource.data).affectedKeys()
+              .hasOnly(['fijado'])
+          && request.resource.data.fijado is bool
+        )
+        ||
+        (
+          esAdmin()
+          && request.resource.data.diff(resource.data).affectedKeys()
+              .hasOnly(['cerrado'])
+          && request.resource.data.cerrado is bool
+        )
+        ||
+        (
+          esAdmin()
+          && request.resource.data.diff(resource.data).affectedKeys()
+              .hasOnly(['numRespuestas'])
+          && request.resource.data.numRespuestas is int
+          && request.resource.data.numRespuestas >= 0
+        );
+
+      allow delete: if esAutor(resource.data) || esAdmin();
+
+      // ===============================================================
+      // RESPUESTAS
+      // ===============================================================
+
+      match /respuestas/{respuestaId} {
+
+        allow read: if true;
+
+        // No se puede responder en un hilo cerrado.
+        allow create: if correoVerificado()
+          && cuentaActiva()
+          && get(/databases/$(database)/documents/hilos/$(hiloId)).data.get('cerrado', false) != true
+          && request.resource.data.keys().hasAll([
+            'contenido', 'autor', 'autorUid', 'fecha'
+          ])
+          && request.resource.data.keys().hasOnly([
+            'contenido', 'autor', 'autorUid', 'fecha'
+          ])
+          && request.resource.data.autorUid == request.auth.uid
+          && request.resource.data.autor
+              == get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.username
+          && request.resource.data.contenido is string
+          && request.resource.data.contenido.size() > 0
+          && request.resource.data.contenido.size() <= 10000
+          && request.resource.data.fecha == request.time;
+
+        allow update: if
+          // El autor solo edita texto + fechaEdicion.
+          (
+            correoVerificado()
+            && cuentaActiva()
+            && esAutor(resource.data)
+            && request.resource.data.diff(resource.data).affectedKeys()
+                .hasOnly(['contenido', 'fechaEdicion'])
+            && request.resource.data.contenido is string
+            && request.resource.data.contenido.size() > 0
+            && request.resource.data.contenido.size() <= 10000
+            && request.resource.data.fechaEdicion == request.time
+          )
+          ||
+          // El votante solo puede cambiar su propia posición.
+          (
+            correoVerificado()
+            && cuentaActiva()
+            && request.resource.data.diff(resource.data).affectedKeys()
+                .hasOnly(['meGustaUids', 'noMeGustaUids'])
+            && listasDeVotosValidas(resource.data)
+            && listasDeVotosValidas(request.resource.data)
+            && cambioSoloMiVoto()
+          );
+
+        allow delete: if esAutor(resource.data) || esAdmin();
+      }
+    }
+
+    // =================================================================
+    // REPORTES
+    // =================================================================
+
+    match /reportes/{reporteId} {
+
+      allow read: if esAdmin();
+
+      allow create: if correoVerificado()
+        && cuentaActiva()
+        && request.resource.data.keys().hasAll([
+          'tipo', 'hiloId', 'respuestaId', 'motivo',
+          'reportadoPorUid', 'estado', 'fecha'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'tipo', 'hiloId', 'respuestaId', 'motivo',
+          'reportadoPorUid', 'estado', 'fecha'
+        ])
+        && request.resource.data.reportadoPorUid == request.auth.uid
+        && request.resource.data.tipo in ['hilo', 'respuesta']
+        && request.resource.data.hiloId is string
+        && request.resource.data.motivo is string
+        && request.resource.data.motivo.size() > 0
+        && request.resource.data.motivo.size() <= 500
+        && request.resource.data.estado == 'pendiente'
+        && request.resource.data.fecha == request.time
+        && (
+          (
+            request.resource.data.tipo == 'hilo'
+            && request.resource.data.respuestaId == null
+            && exists(/databases/$(database)/documents/hilos/$(request.resource.data.hiloId))
+          )
+          ||
+          (
+            request.resource.data.tipo == 'respuesta'
+            && request.resource.data.respuestaId is string
+            && exists(/databases/$(database)/documents/hilos/$(request.resource.data.hiloId)/respuestas/$(request.resource.data.respuestaId))
+          )
+        );
+
+      // Los administradores solo pueden cambiar el estado a resuelto.
+      allow update: if esAdmin()
+        && request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['estado'])
+        && resource.data.estado == 'pendiente'
+        && request.resource.data.estado == 'resuelto';
+
+      allow delete: if esAdmin();
+    }
+
+    // =================================================================
+    // NOTIFICACIONES
+    // =================================================================
+
+    match /notificaciones/{notifId} {
+
+      allow read: if estaLogueado()
+        && resource.data.paraUid == request.auth.uid;
+
+      // El destinatario solo puede marcar su propia notificación como leída.
+      allow update: if estaLogueado()
+        && resource.data.paraUid == request.auth.uid
+        && request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['leida'])
+        && request.resource.data.leida == true
+        && request.resource.data.paraUid == resource.data.paraUid;
+
+      allow delete: if estaLogueado()
+        && resource.data.paraUid == request.auth.uid;
+
+      // Solo se puede crear una notificación de respuesta para el
+      // verdadero autor del hilo y con identidad coherente.
+      // Con el código actual no podemos vincularla a un respuestaId
+      // concreto, así que reforzamos todos los demás campos.
+      allow create: if correoVerificado()
+        && cuentaActiva()
+        && request.resource.data.keys().hasAll([
+          'paraUid', 'tipo', 'hiloId', 'hiloTitulo',
+          'deUid', 'deUsername', 'leida', 'fecha'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'paraUid', 'tipo', 'hiloId', 'hiloTitulo',
+          'deUid', 'deUsername', 'leida', 'fecha'
+        ])
+        && request.resource.data.tipo == 'respuesta'
+        && request.resource.data.deUid == request.auth.uid
+        && request.resource.data.paraUid != request.auth.uid
+        && request.resource.data.hiloId is string
+        && request.resource.data.hiloTitulo is string
+        && request.resource.data.hiloTitulo
+            == get(/databases/$(database)/documents/hilos/$(request.resource.data.hiloId)).data.titulo
+        && get(/databases/$(database)/documents/hilos/$(request.resource.data.hiloId)).data.autorUid
+            == request.resource.data.paraUid
+        && request.resource.data.deUsername
+            == get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.username
+        && request.resource.data.leida == false
+        && request.resource.data.fecha == request.time;
+
+    }
+
+    // =================================================================
+    // TODO LO DEMÁS DENEGADO
+    // =================================================================
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

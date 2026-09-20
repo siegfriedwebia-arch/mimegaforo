@@ -1027,11 +1027,34 @@ const el=document.getElementById("banner-cookies");
 if(el) el.classList.add("activo");
 };
 
+// Google Analytics (GA4) solo se activa si el usuario elige "Aceptar todo".
+// Con "Solo esenciales" nunca se carga, tal como se indica en la Política de cookies.
+let analyticsActivado=false;
+
+function activarGoogleAnalytics(){
+if(analyticsActivado) return;
+analyticsActivado=true;
+
+const script=document.createElement("script");
+script.async=true;
+script.src="https://www.googletagmanager.com/gtag/js?id=G-MZX5OZNPRX";
+document.head.appendChild(script);
+
+window.dataLayer=window.dataLayer||[];
+function gtag(){dataLayer.push(arguments);}
+window.gtag=gtag;
+gtag("js",new Date());
+gtag("config","G-MZX5OZNPRX");
+}
+
 window.responderConsentimientoCookies=function(valor){
 try{
-localStorage.setItem("mimegaforo_cookies",valor);
+localStorage.setItem("mimegaforo_cookies_v2",valor);
 }catch(error){
 console.error(error);
+}
+if(valor==="todas"){
+activarGoogleAnalytics();
 }
 const el=document.getElementById("banner-cookies");
 if(el) el.classList.remove("activo");
@@ -1040,12 +1063,14 @@ if(el) el.classList.remove("activo");
 window.addEventListener("DOMContentLoaded",function(){
 let eleccionGuardada=null;
 try{
-eleccionGuardada=localStorage.getItem("mimegaforo_cookies");
+eleccionGuardada=localStorage.getItem("mimegaforo_cookies_v2");
 }catch(error){
 console.error(error);
 }
 if(!eleccionGuardada){
 mostrarBannerCookies();
+}else if(eleccionGuardada==="todas"){
+activarGoogleAnalytics();
 }
 });
 
@@ -2470,10 +2495,12 @@ abrirPaginaLegal("🍪 Política de cookies",`
 
 <div class="hilo-card" style="cursor:default">
 <h3>¿Qué usamos actualmente?</h3>
-<p><strong>Solo almacenamiento esencial:</strong></p>
+<p><strong>Almacenamiento esencial:</strong></p>
 <p>• Tu sesión de inicio de sesión (gestionada por Firebase Authentication), necesaria para que el foro sepa que has iniciado sesión.<br>
 • Tu elección sobre este mismo aviso de cookies, para no volver a preguntarte.</p>
-<p>Ahora mismo <strong>no usamos cookies de analítica ni de publicidad</strong>. Si en el futuro se añaden (por ejemplo, Google Analytics o Google AdSense), se listarán aquí y se te volverá a pedir tu consentimiento.</p>
+<p><strong>Analítica (solo si aceptas "Aceptar todo"):</strong></p>
+<p>• <strong>Google Analytics</strong>, que nos ayuda a entender cómo se usa el foro (qué secciones se visitan más, cuánto tiempo se pasa, desde qué tipo de dispositivo) de forma agregada. Si eliges "Solo esenciales", Google Analytics no se activa en ningún momento.</p>
+<p>Ahora mismo <strong>no usamos cookies de publicidad</strong>. Si en el futuro se añaden (por ejemplo, Google AdSense), se listarán aquí y se te volverá a pedir tu consentimiento.</p>
 </div>
 
 <div class="hilo-card" style="cursor:default">
@@ -3351,7 +3378,7 @@ iniciarRouterForo();
 
 <div id="banner-cookies" class="banner-cookies">
   <p>
-    Usamos almacenamiento local necesario para que funcione el inicio de sesión.
+    Usamos almacenamiento esencial para que funcione el inicio de sesión, y si lo aceptas, Google Analytics para entender el uso del foro.
     Más información en nuestra <a href="#" onclick="abrirCookies();return false;">Política de cookies</a>.
   </p>
   <div class="banner-cookies-botones">
